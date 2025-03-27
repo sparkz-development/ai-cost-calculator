@@ -4,7 +4,7 @@ import { LlmSchema, Message } from "../../types";
 /**
  * Simplified interface for the OpenAI Chat request format
  */
-interface OpenAIChatRequest {
+export interface OpenAIChatRequest {
   model?: string;
   messages?: {
     role: string;
