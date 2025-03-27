@@ -1,14 +1,69 @@
-# llm-cost
+# @sparkz-community/ai-cost-calculator
 
-The `src/` directory contains the per-LLM provider costs calculation code. Please help keep this code up to date by submitting PRs when costs change
+A comprehensive library for calculating costs across various AI providers and models.
+
+## Installation
+
+```bash
+# Using npm
+npm install @sparkz-community/ai-cost-calculator
+```
+
+```bash
+# Using yarn
+yarn add @sparkz-community/ai-cost-calculator
+```
+
+```bash
+# Using pnpm
+pnpm add @sparkz-community/ai-cost-calculator
+```
+
+## Usage
+
+### Basic Cost Calculation
+
+```typescript
+import { costOf, costOfPrompt } from '@sparkz-community/ai-cost-calculator';
+
+// Get the cost object for a specific model
+const cost = costOf({ 
+  model: 'gpt-4', 
+  provider: 'OPENAI' 
+});
+
+// Calculate the cost of a specific prompt
+const totalCost = costOfPrompt({
+  provider: 'OPENAI',
+  model: 'gpt-4',
+  promptTokens: 500,
+  promptCacheWriteTokens: 0,
+  promptCacheReadTokens: 0,
+  completionTokens: 200
+});
+
+console.log(`Cost for this request: $${totalCost.toFixed(6)}`);
+```
+
+### Using LLM Mappers
+
+```typescript
+import { mapOpenAIRequestV2 } from '@sparkz-community/ai-cost-calculator';
+
+const mappedRequest = mapOpenAIRequestV2({
+  request: openAIRequestObject,
+  response: openAIResponseObject,
+  model: 'gpt-4'
+});
+```
 
 ## How to add new cost data
 
-1. Add new cost data to the `costs/src/` directory. If provider folder exists, add to its index.ts. If not, create a new folder with the provider name and an index.ts and export a cost object
+1. Add new cost data to the `cost/providers/` directory. If provider folder exists, add to its index.ts. If not, create a new folder with the provider name and an index.ts and export a cost object
 
    Example:
 
-   File name: `costs/src/anthropic/index.ts`
+   File name: `cost/providers/anthropic/index.ts`
 
    ```typescript
    export const costs: ModelRow[] = [
@@ -35,14 +90,14 @@ The `src/` directory contains the per-LLM provider costs calculation code. Pleas
 
    cost object is the cost per token for prompt and completion
 
-2. Import the new cost data into `src/providers/mappings.ts` and add it to the `providers` array
+2. Import the new cost data into `cost/providers/mappings.ts` and add it to the `providers` array
 
    Example:
 
-   File name: `src/providers/mappings.ts`
+   File name: `cost/providers/mappings.ts`
 
    ```typescript
-   import { costs as anthropicCosts } from "./providers/anthropic";
+   import { costs as anthropicCosts } from "./anthropic";
 
    // 1. Add the pattern for the API so it is a valid gateway.
    const anthropicPattern = /^https:\/\/api\.anthropic\.com/;
@@ -63,5 +118,20 @@ The `src/` directory contains the per-LLM provider costs calculation code. Pleas
    ];
    ```
 
-3. Run `yarn test -- -u` in the `cost/` directory to update the snapshot tests
-4. Run `yarn copy-cost` in the `cost/` directory to copy the cost data into other directories
+3. Run `npm test -- -u` to update the snapshot tests
+4. Run `npm run build` to compile the changes
+
+## Features
+
+- Calculate costs for various AI providers (OpenAI, Anthropic, Google, etc.)
+- Support for different cost models (prompt tokens, completion tokens, etc.)
+- LLM request and response mapping utilities
+- TypeScript support with full type definitions
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+MIT

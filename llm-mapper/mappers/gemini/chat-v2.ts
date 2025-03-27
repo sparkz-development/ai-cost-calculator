@@ -4,7 +4,7 @@ import { FunctionCall, LlmSchema, Message } from "../../types";
 /**
  * Simplified interface for the Google (Gemini) Chat request format
  */
-interface GoogleChatRequest {
+export interface GoogleChatRequest {
   model?: string;
   contents?:
     | Array<{

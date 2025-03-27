@@ -4,7 +4,7 @@ import { LlmSchema, Message } from "../../types";
 /**
  * Simplified interface for the Anthropic Chat request format
  */
-interface AnthropicChatRequest {
+export interface AnthropicChatRequest {
   model?: string;
   messages?: {
     role: string;

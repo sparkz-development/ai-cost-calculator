@@ -1,15 +1,24 @@
 {
-  "name": "GenAICost",
+  "name": "@sparkz-community/ai-cost-calculator",
   "version": "1.0.0",
-  "main": "src/index.ts",
-  "repository": "git@github.com:Helicone/GenAICost.git",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Helicone/GenAICost.git"
+  },
   "author": "Justin <justintorre75@gmail.com>",
   "license": "MIT",
   "scripts": {
     "build": "tsc",
     "test": "jest",
     "copy-cost": "./copy-packages.sh -p cost",
-    "copy-llm-mapper": "./copy-packages.sh -p llm-mapper"
+    "copy-llm-mapper": "./copy-packages.sh -p llm-mapper",
+    "prepublishOnly": "npm run build"
   },
   "devDependencies": {
     "@jest/globals": "^29.7.0",
