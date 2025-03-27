@@ -19,4 +19,5 @@ export * from './llm-mapper/mappers/vector-db/index';
 export * from './llm-mapper/path-mapper/index';
 export * from './llm-mapper/path-mapper/builder';
 export * from './llm-mapper/path-mapper/core';
-export { costOf, costOfPrompt, COST_MULTIPLE } from './cost';
+export { costOf, costOfPrompt, COST_MULTIPLE, providersNames } from './cost';
+export type { ProviderName } from './cost';

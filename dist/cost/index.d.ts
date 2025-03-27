@@ -26,3 +26,5 @@ export declare function costOfPrompt({ provider, model, promptTokens, promptCach
 export declare const COST_MULTIPLE = 1000000000;
 export declare function clickhousePriceCalcNonAggregated(table: string): string;
 export declare function clickhousePriceCalc(table: string): string;
+export { providersNames } from "./providers/mappings";
+export type { ProviderName } from "./providers/mappings";

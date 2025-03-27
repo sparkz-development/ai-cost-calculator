@@ -19,7 +19,7 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.COST_MULTIPLE = exports.costOfPrompt = exports.costOf = void 0;
+exports.providersNames = exports.COST_MULTIPLE = exports.costOfPrompt = exports.costOf = void 0;
 // Re-export everything from the cost module
 __exportStar(require("./cost"), exports);
 // Re-export everything from the llm-mapper types
@@ -48,3 +48,4 @@ var cost_1 = require("./cost");
 Object.defineProperty(exports, "costOf", { enumerable: true, get: function () { return cost_1.costOf; } });
 Object.defineProperty(exports, "costOfPrompt", { enumerable: true, get: function () { return cost_1.costOfPrompt; } });
 Object.defineProperty(exports, "COST_MULTIPLE", { enumerable: true, get: function () { return cost_1.COST_MULTIPLE; } });
+Object.defineProperty(exports, "providersNames", { enumerable: true, get: function () { return cost_1.providersNames; } });

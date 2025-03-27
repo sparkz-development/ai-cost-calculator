@@ -211,3 +211,6 @@ sum(
   ) / ${COST_MULTIPLE}
 `;
 }
+
+export { providersNames } from "./providers/mappings";
+export type { ProviderName } from "./providers/mappings";

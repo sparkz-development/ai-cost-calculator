@@ -35,4 +35,5 @@ export * from './llm-mapper/path-mapper/builder';
 export * from './llm-mapper/path-mapper/core';
 
 // Main public API
-export { costOf, costOfPrompt, COST_MULTIPLE } from './cost';
+export { costOf, costOfPrompt, COST_MULTIPLE, providersNames } from './cost';
+export type { ProviderName } from './cost';
