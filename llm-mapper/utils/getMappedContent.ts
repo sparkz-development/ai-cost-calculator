@@ -20,9 +20,13 @@ import { mapTool } from "../mappers/tool";
 import { MapperFn } from "../mappers/types";
 import { mapVectorDB } from "../mappers/vector-db";
 import { getMapperTypeFromHeliconeRequest } from "./getMapperType";
+import { mapOpenAIResponse } from "../mappers/openai/responses";
+
+const MAX_PREVIEW_LENGTH = 1_000;
 
 export const MAPPERS: Record<MapperType, MapperFn<any, any>> = {
   "openai-chat": mapOpenAIRequest,
+  "openai-response": mapOpenAIResponse,
   "anthropic-chat": mapAnthropicRequest,
   "gemini-chat": mapGeminiPro,
   "black-forest-labs-image": mapBlackForestLabsImage,
@@ -61,6 +65,8 @@ const metaDataFromHeliconeRequest = (
   return {
     requestId: heliconeRequest.request_id,
     countryCode: heliconeRequest.country_code,
+    cacheEnabled: heliconeRequest.cache_enabled ?? false,
+    cacheReferenceId: heliconeRequest.cache_reference_id ?? null,
     cost: modelCost({
       provider: heliconeRequest.provider,
       model: model,
@@ -68,6 +74,9 @@ const metaDataFromHeliconeRequest = (
       sum_prompt_tokens: heliconeRequest.prompt_tokens || 0,
       prompt_cache_write_tokens: heliconeRequest.prompt_cache_write_tokens || 0,
       prompt_cache_read_tokens: heliconeRequest.prompt_cache_read_tokens || 0,
+
+      prompt_audio_tokens: heliconeRequest.prompt_audio_tokens || 0,
+      completion_audio_tokens: heliconeRequest.completion_audio_tokens || 0,
 
       sum_completion_tokens: heliconeRequest.completion_tokens || 0,
 
@@ -161,7 +170,9 @@ const messageToText = (message: Message): string => {
   text += message.content?.trim() ?? "";
   message.tool_calls?.forEach((toolCall) => {
     text += JSON.stringify(toolCall.arguments).trim();
-    text += JSON.stringify(toolCall.name).trim();
+    if (toolCall.name) {
+      text += JSON.stringify(toolCall.name).trim();
+    }
   });
   text += message.role ?? "";
   text += message.name ?? "";
@@ -234,8 +245,24 @@ const sanitizeMappedContent = (
       },
     },
     preview: {
-      request: mappedContent.preview.request?.slice(0, 30),
-      response: mappedContent.preview.response?.slice(0, 30),
+      request:
+        typeof mappedContent.preview.request === "string"
+          ? mappedContent.preview.request
+              .replaceAll("\n", " ")
+              .slice(0, MAX_PREVIEW_LENGTH)
+          : String(mappedContent.preview.request || "").slice(
+              0,
+              MAX_PREVIEW_LENGTH
+            ),
+      response:
+        typeof mappedContent.preview.response === "string"
+          ? mappedContent.preview.response
+              .replaceAll("\n", " ")
+              .slice(0, MAX_PREVIEW_LENGTH)
+          : String(mappedContent.preview.response || "").slice(
+              0,
+              MAX_PREVIEW_LENGTH
+            ),
       concatenatedMessages:
         sanitizeMessages(mappedContent.preview.concatenatedMessages) ?? [],
       fullRequestText: (preview?: boolean) => {
