@@ -76,28 +76,63 @@ const getResponseText = (responseBody, statusCode = 200) => {
 const getRequestMessages = (contents) => {
     return contents
         .map((content) => {
-        var _a;
         if (!content)
-            return [];
+            return null;
         const parts = Array.isArray(content.parts)
             ? content.parts
             : [content.parts].filter(Boolean);
-        // Find text and image parts
-        const textParts = parts.filter((part) => part && typeof part.text === "string");
-        const imagePart = parts.find((part) => { var _a; return part && ((_a = part.inlineData) === null || _a === void 0 ? void 0 : _a.data); });
-        return [
-            {
+        if (parts.length === 0)
+            return null;
+        const mappedParts = parts
+            .map((part) => {
+            var _a, _b;
+            if (!part)
+                return null;
+            if (typeof part.text === "string") {
+                return {
+                    _type: "message",
+                    role: content.role || "user", // Role applied at part level for simplicity, will be overridden if contentArray
+                    content: part.text,
+                };
+            }
+            else if ((_a = part.inlineData) === null || _a === void 0 ? void 0 : _a.data) {
+                // Assuming inlineData.data contains the base64 string
+                return {
+                    // NOTE: Setting _type to "file" now as it could be image, pdf, etc.
+                    // The UI will use mime_type to determine specific rendering.
+                    _type: "file",
+                    role: content.role || "user", // Role applied at part level
+                    content: part.inlineData.data, // Store base64 here
+                    mime_type: (_b = part.inlineData) === null || _b === void 0 ? void 0 : _b.mime_type, // Corrected field name to snake_case
+                };
+            }
+            // Handle other potential part types like functionCall if needed later
+            return null;
+        })
+            .filter((part) => part !== null);
+        if (mappedParts.length === 0) {
+            return null; // No mappable parts found
+        }
+        else if (mappedParts.length === 1) {
+            // If only one part, return it directly, keeping its original _type and role
+            return mappedParts[0];
+        }
+        else {
+            // If multiple parts (e.g., text + image), create a contentArray
+            return {
+                _type: "contentArray",
                 role: content.role || "user",
-                content: textParts.map((part) => part.text).join(" "),
-                _type: (imagePart ? "image" : "message"),
-                image_url: (_a = imagePart === null || imagePart === void 0 ? void 0 : imagePart.inlineData) === null || _a === void 0 ? void 0 : _a.data,
-            },
-        ];
+                contentArray: mappedParts.map((part) => ({
+                    ...part,
+                    role: undefined, // Role is defined on the parent contentArray message
+                })),
+            };
+        }
     })
-        .flat();
+        .filter((message) => message !== null);
 };
 const mapGeminiPro = ({ request, response, statusCode = 200, model, }) => {
-    var _a, _b, _c, _d, _e;
+    var _a, _b, _c, _d, _e, _f, _g, _h;
     const generateConfig = (request === null || request === void 0 ? void 0 : request.generationConfig) || {};
     const contents = request === null || request === void 0 ? void 0 : request.contents;
     const messages = Array.isArray(contents)
@@ -107,7 +142,19 @@ const mapGeminiPro = ({ request, response, statusCode = 200, model, }) => {
     const modelVersion = (!model || model === "unknown") && (response === null || response === void 0 ? void 0 : response.modelVersion)
         ? response.modelVersion
         : model;
-    const requestMessages = getRequestMessages(messages);
+    // Extract system instruction
+    const systemInstructionText = (_c = (_b = (_a = request === null || request === void 0 ? void 0 : request.systemInstruction) === null || _a === void 0 ? void 0 : _a.parts) === null || _b === void 0 ? void 0 : _b[0]) === null || _c === void 0 ? void 0 : _c.text;
+    const systemMessage = systemInstructionText
+        ? {
+            _type: "message",
+            role: "system",
+            content: systemInstructionText,
+        }
+        : null;
+    const userMessages = getRequestMessages(messages);
+    const requestMessages = systemMessage
+        ? [systemMessage, ...userMessages]
+        : userMessages;
     response = Array.isArray(response) ? response : [response].filter(Boolean);
     const combinedContent = response
         .map((response) => {
@@ -163,10 +210,10 @@ const mapGeminiPro = ({ request, response, statusCode = 200, model, }) => {
             .find((funcCall) => funcCall);
     })
         .find((funcCall) => funcCall);
-    const firstContent = (_c = (_b = (_a = response[0]) === null || _a === void 0 ? void 0 : _a.candidates) === null || _b === void 0 ? void 0 : _b[0]) === null || _c === void 0 ? void 0 : _c.content;
+    const firstContent = (_f = (_e = (_d = response[0]) === null || _d === void 0 ? void 0 : _d.candidates) === null || _e === void 0 ? void 0 : _e[0]) === null || _f === void 0 ? void 0 : _f.content;
     const responseMessages = combinedContent || functionCall
         ? {
-            role: (_d = firstContent === null || firstContent === void 0 ? void 0 : firstContent.role) !== null && _d !== void 0 ? _d : "model",
+            role: (_g = firstContent === null || firstContent === void 0 ? void 0 : firstContent.role) !== null && _g !== void 0 ? _g : "model",
             content: combinedContent || undefined,
             tool_calls: functionCall
                 ? [
@@ -179,7 +226,7 @@ const mapGeminiPro = ({ request, response, statusCode = 200, model, }) => {
             _type: functionCall ? "functionCall" : "message",
         }
         : undefined;
-    const error = (_e = response.find((item) => item === null || item === void 0 ? void 0 : item.error)) === null || _e === void 0 ? void 0 : _e.error;
+    const error = (_h = response.find((item) => item === null || item === void 0 ? void 0 : item.error)) === null || _h === void 0 ? void 0 : _h.error;
     const schema = {
         request: {
             model: modelVersion,

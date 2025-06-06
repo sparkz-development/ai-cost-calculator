@@ -231,6 +231,8 @@ const mapOpenAIRequest = ({ request, response, statusCode = 200, model, }) => {
             description: tool.description || tool.function.description,
             parameters: tool.parameters || tool.function.parameters,
         })),
+        stop: request.stop,
+        response_format: request.response_format,
     };
     const llmSchema = {
         request: requestToReturn,

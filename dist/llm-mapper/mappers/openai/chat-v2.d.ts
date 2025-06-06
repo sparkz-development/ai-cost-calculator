@@ -2,7 +2,7 @@ import { LlmSchema } from "../../types";
 /**
  * Simplified interface for the OpenAI Chat request format
  */
-export interface OpenAIChatRequest {
+interface OpenAIChatRequest {
     model?: string;
     messages?: {
         role: string;
@@ -75,3 +75,4 @@ export declare const mapOpenAIRequestV2: ({ request, response, model, }: {
     statusCode?: number;
     model: string;
 }) => LlmSchema;
+export {};

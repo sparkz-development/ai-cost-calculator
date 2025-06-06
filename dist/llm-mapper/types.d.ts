@@ -1,5 +1,6 @@
 import { ProviderName } from "../cost/providers/mappings";
-export type MapperType = "openai-chat" | "anthropic-chat" | "gemini-chat" | "black-forest-labs-image" | "openai-assistant" | "openai-image" | "openai-moderation" | "openai-embedding" | "openai-instruct" | "openai-realtime" | "vector-db" | "tool" | "unknown";
+export declare const DEFAULT_UUID = "00000000-0000-0000-0000-000000000000";
+export type MapperType = "openai-chat" | "openai-response" | "anthropic-chat" | "gemini-chat" | "black-forest-labs-image" | "openai-assistant" | "openai-image" | "openai-moderation" | "openai-embedding" | "openai-instruct" | "openai-realtime" | "vector-db" | "tool" | "unknown";
 export type Provider = ProviderName | "CUSTOM";
 export type LlmType = "chat" | "completion";
 export type MappedLLMRequest = {
@@ -31,6 +32,7 @@ export interface LLMRequestBody {
     model?: string;
     messages?: Message[] | null;
     prompt?: string | null;
+    instructions?: string | null;
     max_tokens?: number | null;
     temperature?: number | null;
     top_p?: number | null;
@@ -59,6 +61,8 @@ export interface LLMRequestBody {
 }
 type LLMResponseBody = {
     messages?: Message[] | null;
+    responses?: Response[] | null;
+    instructions?: string | null;
     model?: string | null;
     error?: {
         heliconeMessage: any;
@@ -87,18 +91,48 @@ type LLMResponseBody = {
     };
 };
 export type Message = {
-    _type: "functionCall" | "function" | "image" | "message" | "autoInput" | "contentArray" | "audio";
+    _type: "functionCall" | "function" | "image" | "file" | "message" | "autoInput" | "contentArray" | "audio";
     id?: string;
-    role?: string;
+    role?: string | "user" | "assistant" | "system" | "developer";
+    instruction?: string;
     name?: string;
     content?: string;
+    mime_type?: string;
+    tool_calls?: FunctionCall[];
+    tool_call_id?: string;
+    timestamp?: string;
+    image_url?: string;
+    audio_data?: string;
+    type?: "input_image" | "input_text" | "input_file";
+    file_data?: string;
+    file_id?: string;
+    filename?: string;
+    detail?: string;
+    idx?: number;
+    contentArray?: Message[];
+    deleted?: boolean;
+    start_timestamp?: string;
+    trigger_event_id?: string;
+    ending_event_id?: string;
+};
+export type Response = {
+    _type: "functionCall" | "function" | "image" | "text" | "file" | "contentArray";
+    id?: string;
+    role: "user" | "assistant" | "system" | "developer";
+    name?: string;
+    type: "input_image" | "input_text" | "input_file";
+    text?: string | undefined;
     tool_calls?: FunctionCall[];
     tool_call_id?: string;
     timestamp?: string;
     image_url?: string;
     audio_data?: string;
     idx?: number;
-    contentArray?: Message[];
+    file_data?: string;
+    file_id?: string;
+    filename?: string;
+    detail?: string;
+    contentArray?: Response[];
 };
 export interface Tool {
     name: string;
@@ -113,6 +147,8 @@ type HeliconeMetadata = {
     requestId: string;
     path: string;
     countryCode: string | null;
+    cacheEnabled: boolean;
+    cacheReferenceId: string | null;
     createdAt: string;
     totalTokens: number | null;
     promptTokens: number | null;
@@ -219,6 +255,8 @@ export interface HeliconeRequest {
     prompt_cache_write_tokens: number | null;
     prompt_cache_read_tokens: number | null;
     completion_tokens: number | null;
+    prompt_audio_tokens: number | null;
+    completion_audio_tokens: number | null;
     prompt_id: string | null;
     feedback_created_at?: string | null;
     feedback_id?: string | null;
@@ -234,5 +272,7 @@ export interface HeliconeRequest {
     assets: Array<string>;
     target_url: string;
     model: string;
+    cache_reference_id: string | null;
+    cache_enabled: boolean;
 }
 export {};

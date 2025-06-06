@@ -18,7 +18,7 @@ export declare const defaultProvider: {
     costs?: ModelRow[];
     modelDetails?: ModelDetailsMap;
 };
-export declare const allCosts: ModelRow[];
+export declare const allCosts: any;
 export declare const approvedDomains: RegExp[];
-export declare const modelNames: string[];
+export declare const modelNames: any;
 export declare const parentModelNames: Record<"OPENAI" | "ANTHROPIC" | "AZURE" | "LOCAL" | "HELICONE" | "AMDBARTEK" | "ANYSCALE" | "CLOUDFLARE" | "2YFV" | "TOGETHER" | "LEMONFOX" | "FIREWORKS" | "PERPLEXITY" | "GOOGLE" | "OPENROUTER" | "WISDOMINANUTSHELL" | "GROQ" | "COHERE" | "MISTRAL" | "DEEPINFRA" | "QSTASH" | "FIRECRAWL" | "AWS" | "DEEPSEEK" | "X" | "AVIAN" | "NEBIUS" | "NOVITA", string[]>;

@@ -12,19 +12,21 @@ export declare function costOf({ model, provider, }: {
     per_call?: number;
     prompt_cache_write_token?: number;
     prompt_cache_read_token?: number;
+    prompt_audio_token?: number;
+    completion_audio_token?: number;
 } | null | undefined;
-export declare function costOfPrompt({ provider, model, promptTokens, promptCacheWriteTokens, promptCacheReadTokens, completionTokens, images, perCall, }: {
+export declare function costOfPrompt({ provider, model, promptTokens, promptCacheWriteTokens, promptCacheReadTokens, promptAudioTokens, completionTokens, completionAudioTokens, images, perCall, }: {
     provider: string;
     model: string;
     promptTokens: number;
     promptCacheWriteTokens: number;
     promptCacheReadTokens: number;
+    promptAudioTokens: number;
     completionTokens: number;
+    completionAudioTokens: number;
     images?: number;
     perCall?: number;
 }): number | null;
 export declare const COST_MULTIPLE = 1000000000;
 export declare function clickhousePriceCalcNonAggregated(table: string): string;
 export declare function clickhousePriceCalc(table: string): string;
-export { providersNames } from "./providers/mappings";
-export type { ProviderName } from "./providers/mappings";

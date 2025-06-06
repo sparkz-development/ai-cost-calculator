@@ -2,7 +2,7 @@ import { LlmSchema } from "../../types";
 /**
  * Simplified interface for the Google (Gemini) Chat request format
  */
-export interface GoogleChatRequest {
+interface GoogleChatRequest {
     model?: string;
     contents?: Array<{
         role?: string;
@@ -68,3 +68,4 @@ export declare const mapGeminiRequestV2: ({ request, response, statusCode, model
     statusCode?: number;
     model: string;
 }) => LlmSchema;
+export {};

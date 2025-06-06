@@ -9,7 +9,6 @@ const azure_1 = require("./azure");
 const cohere_1 = require("./cohere");
 const deepseek_1 = require("./deepseek");
 const fireworks_1 = require("./fireworks");
-const google_1 = require("./google");
 const groq_1 = require("./groq");
 const mistral_1 = require("./mistral");
 const nebius_1 = require("./nebius");
@@ -23,9 +22,10 @@ const chat_1 = require("./togetherai/chat");
 const llama_1 = require("./togetherai/chat/llama");
 const completion_1 = require("./togetherai/completion");
 const x_1 = require("./x");
+const google_1 = require("./google");
 const openAiPattern = /^https:\/\/api\.openai\.com/;
 const anthropicPattern = /^https:\/\/api\.anthropic\.com/;
-const azurePattern = /^(https?:\/\/)?([^.]*\.)?(openai\.azure\.com|azure-api\.net)(\/.*)?$/;
+const azurePattern = /^(https?:\/\/)?([^.]*\.)?(openai\.azure\.com|azure-api\.net|cognitiveservices\.azure\.com)(\/.*)?$/;
 const localProxyPattern = /^http:\/\/127\.0\.0\.1:\d+\/v\d+\/?$/;
 const heliconeProxyPattern = /^https:\/\/oai\.hconeai\.com/;
 const amdbartekPattern = /^https:\/\/.*\.amdbartek\.dev/;
@@ -173,7 +173,8 @@ exports.providers = [
     {
         pattern: googleapis,
         provider: "GOOGLE",
-        costs: google_1.costs,
+        costs: google_1.googleProvider.costs,
+        modelDetails: google_1.googleProvider.modelDetails,
     },
     {
         pattern: openRouter,

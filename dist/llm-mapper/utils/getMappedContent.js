@@ -15,8 +15,11 @@ const realtime_1 = require("../mappers/openai/realtime");
 const tool_1 = require("../mappers/tool");
 const vector_db_1 = require("../mappers/vector-db");
 const getMapperType_1 = require("./getMapperType");
+const responses_1 = require("../mappers/openai/responses");
+const MAX_PREVIEW_LENGTH = 1000;
 exports.MAPPERS = {
     "openai-chat": chat_3.mapOpenAIRequest,
+    "openai-response": responses_1.mapOpenAIResponse,
     "anthropic-chat": chat_1.mapAnthropicRequest,
     "gemini-chat": chat_2.mapGeminiPro,
     "black-forest-labs-image": image_1.mapBlackForestLabsImage,
@@ -46,16 +49,20 @@ const getStatusType = (heliconeRequest) => {
     }
 };
 const metaDataFromHeliconeRequest = (heliconeRequest, model) => {
-    var _a, _b, _c;
+    var _a, _b, _c, _d, _e;
     return {
         requestId: heliconeRequest.request_id,
         countryCode: heliconeRequest.country_code,
+        cacheEnabled: (_a = heliconeRequest.cache_enabled) !== null && _a !== void 0 ? _a : false,
+        cacheReferenceId: (_b = heliconeRequest.cache_reference_id) !== null && _b !== void 0 ? _b : null,
         cost: (0, costCalc_1.modelCost)({
             provider: heliconeRequest.provider,
             model: model,
             sum_prompt_tokens: heliconeRequest.prompt_tokens || 0,
             prompt_cache_write_tokens: heliconeRequest.prompt_cache_write_tokens || 0,
             prompt_cache_read_tokens: heliconeRequest.prompt_cache_read_tokens || 0,
+            prompt_audio_tokens: heliconeRequest.prompt_audio_tokens || 0,
+            completion_audio_tokens: heliconeRequest.completion_audio_tokens || 0,
             sum_completion_tokens: heliconeRequest.completion_tokens || 0,
             sum_tokens: heliconeRequest.total_tokens || 0,
         }),
@@ -72,9 +79,9 @@ const metaDataFromHeliconeRequest = (heliconeRequest, model) => {
             code: heliconeRequest.response_status,
         },
         feedback: {
-            createdAt: (_a = heliconeRequest.feedback_created_at) !== null && _a !== void 0 ? _a : null,
-            id: (_b = heliconeRequest.feedback_id) !== null && _b !== void 0 ? _b : null,
-            rating: (_c = heliconeRequest.feedback_rating) !== null && _c !== void 0 ? _c : null,
+            createdAt: (_c = heliconeRequest.feedback_created_at) !== null && _c !== void 0 ? _c : null,
+            id: (_d = heliconeRequest.feedback_id) !== null && _d !== void 0 ? _d : null,
+            rating: (_e = heliconeRequest.feedback_rating) !== null && _e !== void 0 ? _e : null,
         },
         provider: heliconeRequest.provider,
         timeToFirstToken: heliconeRequest.time_to_first_token,
@@ -137,7 +144,9 @@ const messageToText = (message) => {
     text += (_c = (_b = message.content) === null || _b === void 0 ? void 0 : _b.trim()) !== null && _c !== void 0 ? _c : "";
     (_d = message.tool_calls) === null || _d === void 0 ? void 0 : _d.forEach((toolCall) => {
         text += JSON.stringify(toolCall.arguments).trim();
-        text += JSON.stringify(toolCall.name).trim();
+        if (toolCall.name) {
+            text += JSON.stringify(toolCall.name).trim();
+        }
     });
     text += (_e = message.role) !== null && _e !== void 0 ? _e : "";
     text += (_f = message.name) !== null && _f !== void 0 ? _f : "";
@@ -148,7 +157,7 @@ const messagesToText = (messages) => {
     return messages.map(messageToText).join("\n").trim();
 };
 const sanitizeMappedContent = (mappedContent) => {
-    var _a, _b, _c, _d, _e;
+    var _a, _b, _c;
     const sanitizeMessage = (message) => {
         if (!message) {
             return {
@@ -194,9 +203,17 @@ const sanitizeMappedContent = (mappedContent) => {
             },
         },
         preview: {
-            request: (_c = mappedContent.preview.request) === null || _c === void 0 ? void 0 : _c.slice(0, 30),
-            response: (_d = mappedContent.preview.response) === null || _d === void 0 ? void 0 : _d.slice(0, 30),
-            concatenatedMessages: (_e = sanitizeMessages(mappedContent.preview.concatenatedMessages)) !== null && _e !== void 0 ? _e : [],
+            request: typeof mappedContent.preview.request === "string"
+                ? mappedContent.preview.request
+                    .replaceAll("\n", " ")
+                    .slice(0, MAX_PREVIEW_LENGTH)
+                : String(mappedContent.preview.request || "").slice(0, MAX_PREVIEW_LENGTH),
+            response: typeof mappedContent.preview.response === "string"
+                ? mappedContent.preview.response
+                    .replaceAll("\n", " ")
+                    .slice(0, MAX_PREVIEW_LENGTH)
+                : String(mappedContent.preview.response || "").slice(0, MAX_PREVIEW_LENGTH),
+            concatenatedMessages: (_c = sanitizeMessages(mappedContent.preview.concatenatedMessages)) !== null && _c !== void 0 ? _c : [],
             fullRequestText: (preview) => {
                 var _a;
                 if (preview) {

@@ -36,15 +36,24 @@ const getMapperTypeFromHeliconeRequest = (heliconeRequest, model) => {
         provider: heliconeRequest.provider,
         path: heliconeRequest.request_path,
         isAssistant: isAssistantRequest(heliconeRequest),
+        targetUrl: heliconeRequest.target_url,
     });
 };
 exports.getMapperTypeFromHeliconeRequest = getMapperTypeFromHeliconeRequest;
-const getMapperType = ({ model, provider, path, isAssistant, }) => {
+const getMapperType = ({ model, provider, path, isAssistant, targetUrl, }) => {
+    if (targetUrl &&
+        targetUrl.includes("chat/completions") &&
+        provider === "GOOGLE") {
+        return "openai-chat";
+    }
     if (!model) {
         return "openai-chat";
     }
     if (typeof model !== "string") {
         return "openai-chat";
+    }
+    if ((targetUrl === null || targetUrl === void 0 ? void 0 : targetUrl.includes("/v1/response")) && provider === "OPENAI") {
+        return "openai-response";
     }
     if (model.includes("deepseek")) {
         return "openai-chat";

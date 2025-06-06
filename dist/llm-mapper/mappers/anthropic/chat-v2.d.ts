@@ -2,7 +2,7 @@ import { LlmSchema } from "../../types";
 /**
  * Simplified interface for the Anthropic Chat request format
  */
-export interface AnthropicChatRequest {
+interface AnthropicChatRequest {
     model?: string;
     messages?: {
         role: string;
@@ -42,3 +42,4 @@ export declare const mapAnthropicRequestV2: ({ request, response, model, }: {
     statusCode?: number;
     model: string;
 }) => LlmSchema;
+export {};
