@@ -1,11 +1,13 @@
 "use strict";
-var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.parentModelNames = exports.modelNames = exports.approvedDomains = exports.allCosts = exports.defaultProvider = exports.playgroundModels = exports.providers = exports.providersNames = void 0;
+exports.parentModelNames = exports.modelNames = exports.approvedDomains = exports.allCosts = exports.defaultProvider = exports.providers = exports.providersNames = exports.azurePattern = void 0;
 const anthropic_1 = require("./anthropic");
 const avian_1 = require("./avian");
-const awsBedrock_1 = require("./awsBedrock");
+const awsBedrock_1 = require("./aws/awsBedrock");
+const awsNova_1 = require("./aws/awsNova");
 const azure_1 = require("./azure");
+const llama_1 = require("./llama");
+const nvidia_1 = require("./nvidia");
 const cohere_1 = require("./cohere");
 const deepseek_1 = require("./deepseek");
 const fireworks_1 = require("./fireworks");
@@ -19,15 +21,20 @@ const openrouter_1 = require("./openrouter");
 const perplexity_1 = require("./perplexity");
 const qstash_1 = require("./qstash");
 const chat_1 = require("./togetherai/chat");
-const llama_1 = require("./togetherai/chat/llama");
+const llama_2 = require("./togetherai/chat/llama");
 const completion_1 = require("./togetherai/completion");
 const x_1 = require("./x");
 const google_1 = require("./google");
-const openAiPattern = /^https:\/\/api\.openai\.com/;
+const vercel_1 = require("./vercel");
+// Matches both standard api.openai.com and US data residency us.api.openai.com
+const openAiPattern = /^https:\/\/(us\.)?api\.openai\.com(\/|$)/;
 const anthropicPattern = /^https:\/\/api\.anthropic\.com/;
-const azurePattern = /^(https?:\/\/)?([^.]*\.)?(openai\.azure\.com|azure-api\.net|cognitiveservices\.azure\.com)(\/.*)?$/;
+exports.azurePattern = /^(https?:\/\/)?([^.]*\.)?(openai\.azure\.com|azure-api\.net|cognitiveservices\.azure\.com|services\.ai\.azure\.com)(\/.*)?$/;
+const llamaApiPattern = /^https:\/\/api\.llama\.com/;
+const nvidiaApiPattern = /^https:\/\/integrate\.api\.nvidia\.com/;
 const localProxyPattern = /^http:\/\/127\.0\.0\.1:\d+\/v\d+\/?$/;
 const heliconeProxyPattern = /^https:\/\/oai\.hconeai\.com/;
+const heliconeInferencePattern = /^https:\/\/inference\.helicone\.ai/;
 const amdbartekPattern = /^https:\/\/.*\.amdbartek\.dev/;
 const anyscalePattern = /^https:\/\/api\.endpoints\.anyscale\.com/;
 const cloudflareAiGatewayPattern = /^https:\/\/gateway\.ai\.cloudflare\.com/;
@@ -55,15 +62,27 @@ const qstash = /^https:\/\/qstash\.upstash\.io/;
 const firecrawl = /^https:\/\/api\.firecrawl\.dev/;
 // https://bedrock-runtime.{some-region}.amazonaws.com/{something-after}
 const awsBedrock = /^https:\/\/bedrock-runtime\.[a-z0-9-]+\.amazonaws\.com\/.*/;
+// https://bedrock-runtime.{some-region}.amazonaws.com/{something-after} same runtime
+const awsNova = /^https:\/\/bedrock-runtime\.[a-z0-9-]+\.amazonaws\.com\/.*/;
 // https://api.deepseek.com
 const deepseek = /^https:\/\/api\.deepseek\.com/;
 // https://api.x.ai
 const x = /^https:\/\/api\.x\.ai/;
 const avianPattern = /^https:\/\/api\.avian\.io/;
-//https://api.studio.nebius.ai
-const nebius = /^https:\/\/api\.studio\.nebius\.ai/;
+//https://api.tokenfactory.nebius.com
+const nebius = /^https:\/\/api\.tokenfactory\.nebius\.com/;
+// https://ai-gateway.vercel.sh
+const vercelGateway = /^https:\/\/ai-gateway\.vercel\.sh/;
 // https://api.novita.ai
 const novita = /^https:\/\/api\.novita\.ai/;
+// api.openpipe.ai
+const openpipe = /^https:\/\/api\.openpipe\.ai/;
+// llm.chutes.com and chutes.com
+const chutes = /^https:\/\/(llm\.)?chutes\.com/;
+// https://api.cerebras.ai
+const cerebras = /^https:\/\/api\.cerebras\.ai/;
+// https://inference.canopywave.io
+const canopywave = /^https:\/\/inference\.canopywave\.io/;
 exports.providersNames = [
     "OPENAI",
     "ANTHROPIC",
@@ -88,11 +107,20 @@ exports.providersNames = [
     "QSTASH",
     "FIRECRAWL",
     "AWS",
+    "BEDROCK",
     "DEEPSEEK",
     "X",
     "AVIAN",
     "NEBIUS",
     "NOVITA",
+    "OPENPIPE",
+    "CHUTES",
+    "LLAMA",
+    "NVIDIA",
+    "VERCEL",
+    "CEREBRAS",
+    "BASETEN",
+    "CANOPYWAVE",
 ];
 exports.providers = [
     {
@@ -108,7 +136,17 @@ exports.providers = [
         modelDetails: anthropic_1.anthropicProvider.modelDetails,
     },
     {
-        pattern: azurePattern,
+        pattern: llamaApiPattern,
+        provider: "LLAMA",
+        costs: llama_1.costs,
+    },
+    {
+        pattern: nvidiaApiPattern,
+        provider: "NVIDIA",
+        costs: nvidia_1.costs,
+    },
+    {
+        pattern: exports.azurePattern,
         provider: "AZURE",
         costs: [...azure_1.costs, ...openai_1.openAIProvider.costs],
     },
@@ -123,6 +161,10 @@ exports.providers = [
     },
     {
         pattern: heliconeProxyPattern,
+        provider: "HELICONE",
+    },
+    {
+        pattern: heliconeInferencePattern,
         provider: "HELICONE",
     },
     {
@@ -151,7 +193,7 @@ exports.providers = [
         provider: "TOGETHER",
         costs: [
             ...chat_1.costs,
-            ...llama_1.costs,
+            ...llama_2.costs,
             ...completion_1.costs,
             ...completion_1.costs,
         ],
@@ -216,6 +258,11 @@ exports.providers = [
     {
         pattern: awsBedrock,
         provider: "AWS",
+        costs: [...awsBedrock_1.costs, ...awsNova_1.costs],
+    },
+    {
+        pattern: awsBedrock,
+        provider: "BEDROCK",
         costs: awsBedrock_1.costs,
     },
     {
@@ -233,17 +280,32 @@ exports.providers = [
         provider: "NOVITA",
         costs: novita_1.costs,
     },
+    {
+        pattern: openpipe,
+        provider: "OPENPIPE",
+        costs: [],
+    },
+    {
+        pattern: chutes,
+        provider: "CHUTES",
+        costs: [],
+    },
+    {
+        pattern: vercelGateway,
+        provider: "VERCEL",
+        costs: vercel_1.costs,
+    },
+    {
+        pattern: cerebras,
+        provider: "CEREBRAS",
+        costs: [],
+    },
+    {
+        pattern: canopywave,
+        provider: "CANOPYWAVE",
+        costs: [],
+    }
 ];
-exports.playgroundModels = (_a = exports.providers
-    .map((provider) => {
-    var _a;
-    return (_a = provider.costs) === null || _a === void 0 ? void 0 : _a.filter((cost) => cost.showInPlayground).map((cost) => ({
-        name: cost.model.value,
-        provider: provider.provider,
-    }));
-})
-    .flat()
-    .filter((model) => model !== undefined)) !== null && _a !== void 0 ? _a : [];
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 exports.defaultProvider = exports.providers.find((provider) => provider.provider === "OPENAI");
 exports.allCosts = exports.providers.flatMap((provider) => { var _a; return (_a = provider.costs) !== null && _a !== void 0 ? _a : []; });

@@ -1,9 +1,10 @@
 import { HeliconeRequest, MapperType, Provider } from "../types";
 export declare const getMapperTypeFromHeliconeRequest: (heliconeRequest: HeliconeRequest, model: string) => MapperType;
-export declare const getMapperType: ({ model, provider, path, isAssistant, targetUrl, }: {
+export declare const getMapperType: ({ model, provider, path, isAssistant, targetUrl, requestReferrer, }: {
     model: string;
     provider: Provider;
     path?: string | null;
     isAssistant?: boolean;
     targetUrl?: string | null;
+    requestReferrer?: string | null;
 }) => MapperType;

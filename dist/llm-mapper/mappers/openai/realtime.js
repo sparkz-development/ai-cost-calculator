@@ -312,11 +312,12 @@ const mapRealtimeMessages = (messages) => {
                     };
                 }
                 return null;
+            case "session.created":
             case "session.update":
-                // -> User: Session update
+                // -> System: Session update
                 return msg.content
                     ? {
-                        role: "user",
+                        role: "system",
                         _type: "message",
                         content: JSON.stringify(msg.content),
                         timestamp: msg.timestamp,

@@ -24,8 +24,10 @@ const getMessageContent = (message) => {
 const anthropicMessageToMessage = (message, role) => {
     var _a, _b, _c;
     const messageRole = role || message.role;
-    // Handle AWS Bedrock format with content array containing text objects
-    if (Array.isArray(message.content) && ((_a = message.content[0]) === null || _a === void 0 ? void 0 : _a.text)) {
+    // Handle AWS Bedrock format with content array containing only text objects
+    if (Array.isArray(message.content) &&
+        message.content.length > 0 &&
+        message.content.every((c) => c.text && !c.type)) {
         return {
             content: message.content.map((c) => c.text).join(" "),
             role: messageRole,
@@ -43,13 +45,16 @@ const anthropicMessageToMessage = (message, role) => {
         };
     }
     if (message.type === "image" || message.type === "image_url") {
+        const imageUrl = (_a = message.image_url) === null || _a === void 0 ? void 0 : _a.url;
+        const base64Data = (_b = message.source) === null || _b === void 0 ? void 0 : _b.data;
+        const mimeType = ((_c = message.source) === null || _c === void 0 ? void 0 : _c.media_type) || "image/png";
+        const generatedImageUrl = imageUrl || (base64Data ? `data:${mimeType};base64,${base64Data}` : undefined);
         return {
-            content: getMessageContent(message),
+            content: base64Data || "",
             role: messageRole,
             _type: "image",
-            image_url: message.type === "image" || message.type === "image_url"
-                ? ((_b = message.image_url) === null || _b === void 0 ? void 0 : _b.url) || ((_c = message.source) === null || _c === void 0 ? void 0 : _c.data)
-                : undefined,
+            image_url: generatedImageUrl,
+            ...(base64Data && { mime_type: mimeType }),
             id: randomId(),
         };
     }

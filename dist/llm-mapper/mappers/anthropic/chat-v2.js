@@ -127,11 +127,14 @@ const convertTools = (tools) => {
 const toExternalTools = (tools) => {
     if (!tools || !Array.isArray(tools))
         return undefined;
-    return tools.map((tool) => ({
-        name: tool.name,
-        description: tool.description,
-        input_schema: tool.parameters || {},
-    }));
+    return tools.map((tool) => {
+        var _a;
+        return ({
+            name: tool.name,
+            description: (_a = tool.description) !== null && _a !== void 0 ? _a : "",
+            input_schema: tool.parameters || {},
+        });
+    });
 };
 /**
  * Convert Anthropic tool_choice to internal format

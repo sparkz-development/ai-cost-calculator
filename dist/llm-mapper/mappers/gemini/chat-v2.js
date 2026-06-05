@@ -146,6 +146,8 @@ const convertResponseMessages = (responseBody) => {
                 const combinedContent = textParts
                     .map((part) => part.text)
                     .join("");
+                // Extract image parts from inlineData
+                const imageParts = parts.filter((part) => { var _a; return part && ((_a = part.inlineData) === null || _a === void 0 ? void 0 : _a.data); });
                 // Check for function calls
                 const functionCallPart = parts.find((part) => part && part.functionCall);
                 const functionCall = functionCallPart === null || functionCallPart === void 0 ? void 0 : functionCallPart.functionCall;
@@ -157,12 +159,63 @@ const convertResponseMessages = (responseBody) => {
                         },
                     ]
                     : undefined;
-                messages.push({
-                    _type: functionCall ? "functionCall" : "message",
-                    role: (_a = content.role) !== null && _a !== void 0 ? _a : "model",
-                    content: combinedContent || undefined,
-                    tool_calls: toolCalls,
-                });
+                const role = (_a = content.role) !== null && _a !== void 0 ? _a : "model";
+                if (functionCall) {
+                    // Function call response
+                    messages.push({
+                        _type: "functionCall",
+                        role,
+                        content: combinedContent || undefined,
+                        tool_calls: toolCalls,
+                    });
+                }
+                else if (imageParts.length > 0 && textParts.length > 0) {
+                    // Mixed content: text + images - create contentArray
+                    const contentArray = [];
+                    // Add text part first
+                    if (combinedContent) {
+                        contentArray.push({
+                            _type: "message",
+                            role,
+                            content: combinedContent,
+                        });
+                    }
+                    // Add image parts
+                    for (const imgPart of imageParts) {
+                        const mimeType = imgPart.inlineData.mimeType || "image/png";
+                        contentArray.push({
+                            _type: "image",
+                            role,
+                            mime_type: mimeType,
+                            image_url: `data:${mimeType};base64,${imgPart.inlineData.data}`,
+                        });
+                    }
+                    messages.push({
+                        _type: "contentArray",
+                        role,
+                        contentArray,
+                    });
+                }
+                else if (imageParts.length > 0) {
+                    // Image only response
+                    for (const imgPart of imageParts) {
+                        const mimeType = imgPart.inlineData.mimeType || "image/png";
+                        messages.push({
+                            _type: "image",
+                            role,
+                            mime_type: mimeType,
+                            image_url: `data:${mimeType};base64,${imgPart.inlineData.data}`,
+                        });
+                    }
+                }
+                else {
+                    // Text only response (existing behavior)
+                    messages.push({
+                        _type: "message",
+                        role,
+                        content: combinedContent || undefined,
+                    });
+                }
             }
         }
     }

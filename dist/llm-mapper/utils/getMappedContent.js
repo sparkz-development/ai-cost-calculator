@@ -7,21 +7,29 @@ const chat_3 = require("../mappers/openai/chat");
 const dalle_1 = require("../mappers/openai/dalle");
 const embedding_1 = require("../mappers/openai/embedding");
 const instruct_1 = require("../mappers/openai/instruct");
-const costCalc_1 = require("../../cost/costCalc");
+const chat_4 = require("../mappers/llama/chat");
+const chat_5 = require("../mappers/vercel/chat");
 const image_1 = require("../mappers/black-forest-labs/image");
 const assistant_1 = require("../mappers/openai/assistant");
 const moderation_1 = require("../mappers/openai/moderation");
 const realtime_1 = require("../mappers/openai/realtime");
 const tool_1 = require("../mappers/tool");
+const data_1 = require("../mappers/data");
 const vector_db_1 = require("../mappers/vector-db");
 const getMapperType_1 = require("./getMapperType");
 const responses_1 = require("../mappers/openai/responses");
 const MAX_PREVIEW_LENGTH = 1000;
 exports.MAPPERS = {
+    // the request-response will be converted to openai format if necessary
+    // thus uses the same mapper.
+    "ai-gateway-chat": chat_3.mapOpenAIRequest,
+    "ai-gateway-responses": responses_1.mapOpenAIResponse,
     "openai-chat": chat_3.mapOpenAIRequest,
     "openai-response": responses_1.mapOpenAIResponse,
     "anthropic-chat": chat_1.mapAnthropicRequest,
     "gemini-chat": chat_2.mapGeminiPro,
+    "llama-chat": chat_4.mapLlamaRequest,
+    "vercel-chat": chat_5.mapVercelRequest,
     "black-forest-labs-image": image_1.mapBlackForestLabsImage,
     "openai-assistant": assistant_1.mapOpenAIAssistant,
     "openai-image": dalle_1.mapDalleRequest,
@@ -31,6 +39,7 @@ exports.MAPPERS = {
     "openai-realtime": realtime_1.mapRealtimeRequest,
     "vector-db": vector_db_1.mapVectorDB,
     tool: tool_1.mapTool,
+    data: data_1.mapData,
     unknown: chat_3.mapOpenAIRequest,
 };
 const getStatusType = (heliconeRequest) => {
@@ -49,26 +58,19 @@ const getStatusType = (heliconeRequest) => {
     }
 };
 const metaDataFromHeliconeRequest = (heliconeRequest, model) => {
-    var _a, _b, _c, _d, _e;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
     return {
         requestId: heliconeRequest.request_id,
         countryCode: heliconeRequest.country_code,
         cacheEnabled: (_a = heliconeRequest.cache_enabled) !== null && _a !== void 0 ? _a : false,
         cacheReferenceId: (_b = heliconeRequest.cache_reference_id) !== null && _b !== void 0 ? _b : null,
-        cost: (0, costCalc_1.modelCost)({
-            provider: heliconeRequest.provider,
-            model: model,
-            sum_prompt_tokens: heliconeRequest.prompt_tokens || 0,
-            prompt_cache_write_tokens: heliconeRequest.prompt_cache_write_tokens || 0,
-            prompt_cache_read_tokens: heliconeRequest.prompt_cache_read_tokens || 0,
-            prompt_audio_tokens: heliconeRequest.prompt_audio_tokens || 0,
-            completion_audio_tokens: heliconeRequest.completion_audio_tokens || 0,
-            sum_completion_tokens: heliconeRequest.completion_tokens || 0,
-            sum_tokens: heliconeRequest.total_tokens || 0,
-        }),
+        cost: (_c = heliconeRequest.cost) !== null && _c !== void 0 ? _c : 0,
         createdAt: heliconeRequest.request_created_at,
         path: heliconeRequest.request_path,
         completionTokens: heliconeRequest.completion_tokens,
+        reasoningTokens: heliconeRequest.reasoning_tokens,
+        promptCacheWriteTokens: heliconeRequest.prompt_cache_write_tokens,
+        promptCacheReadTokens: heliconeRequest.prompt_cache_read_tokens,
         promptTokens: heliconeRequest.prompt_tokens,
         totalTokens: heliconeRequest.total_tokens,
         latency: heliconeRequest.delay_ms,
@@ -79,25 +81,32 @@ const metaDataFromHeliconeRequest = (heliconeRequest, model) => {
             code: heliconeRequest.response_status,
         },
         feedback: {
-            createdAt: (_c = heliconeRequest.feedback_created_at) !== null && _c !== void 0 ? _c : null,
-            id: (_d = heliconeRequest.feedback_id) !== null && _d !== void 0 ? _d : null,
-            rating: (_e = heliconeRequest.feedback_rating) !== null && _e !== void 0 ? _e : null,
+            createdAt: (_d = heliconeRequest.feedback_created_at) !== null && _d !== void 0 ? _d : null,
+            id: (_e = heliconeRequest.feedback_id) !== null && _e !== void 0 ? _e : null,
+            rating: (_f = heliconeRequest.feedback_rating) !== null && _f !== void 0 ? _f : null,
         },
         provider: heliconeRequest.provider,
         timeToFirstToken: heliconeRequest.time_to_first_token,
         scores: heliconeRequest.scores,
+        promptId: (_g = heliconeRequest.prompt_id) !== null && _g !== void 0 ? _g : null,
+        promptVersion: (_h = heliconeRequest.prompt_version) !== null && _h !== void 0 ? _h : null,
+        targetUrl: (_j = heliconeRequest.target_url) !== null && _j !== void 0 ? _j : null,
+        requestReferrer: (_k = heliconeRequest.request_referrer) !== null && _k !== void 0 ? _k : null,
+        storageLocation: (_l = heliconeRequest.storage_location) !== null && _l !== void 0 ? _l : null,
     };
 };
 const getUnsanitizedMappedContent = ({ mapperType, heliconeRequest, }) => {
-    const mapper = exports.MAPPERS[mapperType];
+    let mapper = exports.MAPPERS[mapperType];
     if (!mapper) {
         throw new Error(`Mapper not found: ${JSON.stringify(mapperType)}`);
     }
     let result;
+    let requestBody = heliconeRequest.request_body;
+    let responseBody = heliconeRequest.response_body;
     try {
         result = mapper({
-            request: heliconeRequest.request_body,
-            response: heliconeRequest.response_body,
+            request: requestBody,
+            response: responseBody,
             statusCode: heliconeRequest.response_status,
             model: heliconeRequest.model,
         });
@@ -106,13 +115,13 @@ const getUnsanitizedMappedContent = ({ mapperType, heliconeRequest, }) => {
         result = {
             preview: {
                 concatenatedMessages: [],
-                request: JSON.stringify(heliconeRequest.request_body),
-                response: JSON.stringify(heliconeRequest.response_body),
+                request: JSON.stringify(requestBody),
+                response: JSON.stringify(responseBody),
                 fullRequestText: () => {
-                    return JSON.stringify(heliconeRequest.request_body);
+                    return JSON.stringify(requestBody);
                 },
                 fullResponseText: () => {
-                    return JSON.stringify(heliconeRequest.response_body);
+                    return JSON.stringify(responseBody);
                 },
             },
             schema: {
@@ -129,8 +138,8 @@ const getUnsanitizedMappedContent = ({ mapperType, heliconeRequest, }) => {
         model: heliconeRequest.model,
         id: heliconeRequest.request_id,
         raw: {
-            request: heliconeRequest.request_body,
-            response: heliconeRequest.response_body,
+            request: requestBody,
+            response: responseBody,
         },
         heliconeMetadata: metaDataFromHeliconeRequest(heliconeRequest, heliconeRequest.model),
     };
@@ -172,6 +181,11 @@ const sanitizeMappedContent = (mappedContent) => {
                 ? typeof message.content === "string"
                     ? message.content
                     : JSON.stringify(message.content)
+                : "",
+            reasoning: message.reasoning
+                ? typeof message.reasoning === "string"
+                    ? message.reasoning
+                    : JSON.stringify(message.reasoning)
                 : "",
         };
     };

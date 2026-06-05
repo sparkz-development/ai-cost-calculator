@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.mapOpenAIRequest = exports.getRequestMessages = exports.getResponseText = void 0;
+exports.mapOpenAIRequest = exports.getLLMSchemaResponse = exports.getRequestMessages = exports.openAIMessageToHeliconeMessage = exports.getResponseText = void 0;
 const contentHelpers_1 = require("../../utils/contentHelpers");
 const messageUtils_1 = require("../../utils/messageUtils");
 const chat_helpers_1 = require("./chat_helpers");
@@ -16,7 +16,7 @@ const getRequestText = (requestBody) => {
         if (!Array.isArray(messages) || messages.length === 0) {
             return "";
         }
-        const lastMessage = messages.at(-1);
+        const lastMessage = messages[messages.length - 1];
         if (!lastMessage)
             return "";
         if (lastMessage.function_call || lastMessage.tool_calls) {
@@ -111,14 +111,6 @@ const processToolResponse = (msg) => {
         content: toolResponseMsg.content || "",
         _type: "function",
         name: msg.name,
-        tool_calls: [
-            {
-                name: msg.name,
-                arguments: {
-                    query_result: msg.content,
-                },
-            },
-        ],
     };
 };
 const processArrayContent = (msg) => {
@@ -169,8 +161,18 @@ const processSingleImage = (msg) => {
 const processTextMessage = (msg) => {
     return {
         content: (0, messageUtils_1.getFormattedMessageContent)(msg.content) || "",
+        reasoning: msg.reasoning || "",
         role: msg.role || "user",
         _type: (0, contentHelpers_1.getContentType)(msg),
+        ...(msg.annotations && { annotations: msg.annotations.map((ann) => {
+                var _a, _b, _c;
+                return ({
+                    type: ann.type,
+                    url: ((_a = ann.url_citation) === null || _a === void 0 ? void 0 : _a.url) || ann.url,
+                    title: ((_b = ann.url_citation) === null || _b === void 0 ? void 0 : _b.title) || ann.title,
+                    content: ((_c = ann.url_citation) === null || _c === void 0 ? void 0 : _c.content) || ann.content,
+                });
+            }) }),
     };
 };
 const openAIMessageToHeliconeMessage = (msg) => {
@@ -189,32 +191,39 @@ const openAIMessageToHeliconeMessage = (msg) => {
     }
     return processTextMessage(msg);
 };
+exports.openAIMessageToHeliconeMessage = openAIMessageToHeliconeMessage;
 const getRequestMessages = (request) => {
     var _a, _b;
-    return (_b = (_a = request.messages) === null || _a === void 0 ? void 0 : _a.map(openAIMessageToHeliconeMessage)) !== null && _b !== void 0 ? _b : [];
+    return (_b = (_a = request.messages) === null || _a === void 0 ? void 0 : _a.map(exports.openAIMessageToHeliconeMessage)) !== null && _b !== void 0 ? _b : [];
 };
 exports.getRequestMessages = getRequestMessages;
 const getLLMSchemaResponse = (response) => {
     var _a;
     if ("error" in response) {
-        return {
-            error: {
-                heliconeMessage: "heliconeMessage" in response.error
-                    ? response.error.heliconeMessage
-                    : JSON.stringify(response.error),
-            },
-        };
+        try {
+            return {
+                error: {
+                    heliconeMessage: "heliconeMessage" in response.error
+                        ? response.error.heliconeMessage
+                        : JSON.stringify(response.error),
+                },
+            };
+        }
+        catch (error) {
+            return response;
+        }
     }
     return {
         messages: (_a = response === null || response === void 0 ? void 0 : response.choices) === null || _a === void 0 ? void 0 : _a.map((choice) => {
             const message = choice === null || choice === void 0 ? void 0 : choice.message;
             if (!message)
                 return null;
-            return openAIMessageToHeliconeMessage(message);
+            return (0, exports.openAIMessageToHeliconeMessage)(message);
         }).filter(Boolean),
         model: response === null || response === void 0 ? void 0 : response.model,
     };
 };
+exports.getLLMSchemaResponse = getLLMSchemaResponse;
 const mapOpenAIRequest = ({ request, response, statusCode = 200, model, }) => {
     var _a, _b, _c, _d, _e;
     const requestToReturn = {
@@ -233,10 +242,12 @@ const mapOpenAIRequest = ({ request, response, statusCode = 200, model, }) => {
         })),
         stop: request.stop,
         response_format: request.response_format,
+        reasoning_effort: request.reasoning_effort,
+        verbosity: request.verbosity,
     };
     const llmSchema = {
         request: requestToReturn,
-        response: getLLMSchemaResponse(response),
+        response: (0, exports.getLLMSchemaResponse)(response),
     };
     return {
         schema: llmSchema,

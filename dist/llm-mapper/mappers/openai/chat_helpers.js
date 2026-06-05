@@ -19,10 +19,11 @@ const parseFunctionArguments = (args) => {
 };
 exports.parseFunctionArguments = parseFunctionArguments;
 const mapToolCallToFunction = (tool) => {
-    var _a, _b, _c;
+    var _a, _b, _c, _d;
     return ({
-        name: (_b = (_a = tool.function) === null || _a === void 0 ? void 0 : _a.name) !== null && _b !== void 0 ? _b : "",
-        arguments: (0, exports.parseFunctionArguments)((_c = tool.function) === null || _c === void 0 ? void 0 : _c.arguments),
+        id: (_a = tool.id) !== null && _a !== void 0 ? _a : "",
+        name: (_c = (_b = tool.function) === null || _b === void 0 ? void 0 : _b.name) !== null && _c !== void 0 ? _c : "",
+        arguments: (0, exports.parseFunctionArguments)((_d = tool.function) === null || _d === void 0 ? void 0 : _d.arguments),
     });
 };
 exports.mapToolCallToFunction = mapToolCallToFunction;
@@ -48,19 +49,20 @@ const handleObjectContent = (content) => {
 exports.handleObjectContent = handleObjectContent;
 const handleToolCalls = (message) => {
     var _a, _b, _c;
-    return ({
+    return {
         content: message.content || "",
         role: (_a = message.role) !== null && _a !== void 0 ? _a : "assistant",
         tool_calls: message.function_call
             ? [
                 {
+                    id: "id" in message.function_call ? message.function_call.id : "",
                     name: message.function_call.name,
                     arguments: (0, exports.parseFunctionArguments)(message.function_call.arguments),
                 },
             ]
             : (_c = (_b = message.tool_calls) === null || _b === void 0 ? void 0 : _b.map(exports.mapToolCallToFunction)) !== null && _c !== void 0 ? _c : [],
         _type: "functionCall",
-    });
+    };
 };
 exports.handleToolCalls = handleToolCalls;
 const handleImageMessage = (msg, imageContent) => {
@@ -74,7 +76,6 @@ const handleImageMessage = (msg, imageContent) => {
 };
 exports.handleImageMessage = handleImageMessage;
 const handleToolResponse = (msg) => {
-    var _a, _b;
     if (msg.role === "function") {
         return {
             content: msg.content,
@@ -98,14 +99,6 @@ const handleToolResponse = (msg) => {
             tool_call_id: msg.tool_call_id,
             _type: "function",
             name: msg.name,
-            tool_calls: [
-                {
-                    name: msg.name,
-                    arguments: {
-                        query_result: msg.content,
-                    },
-                },
-            ],
         };
     }
     return {
@@ -113,7 +106,6 @@ const handleToolResponse = (msg) => {
         role: msg.role,
         tool_call_id: msg.tool_call_id,
         _type: "function",
-        tool_calls: (_b = (_a = msg.tool_calls) === null || _a === void 0 ? void 0 : _a.map(exports.mapToolCallToFunction)) !== null && _b !== void 0 ? _b : [],
     };
 };
 exports.handleToolResponse = handleToolResponse;

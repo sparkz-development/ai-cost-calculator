@@ -20,7 +20,14 @@ const getResponseText = (responseBody, statusCode = 200) => {
     }
 };
 const mapDalleRequest = ({ request, response, statusCode = 200, model, }) => {
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
+    var _a, _b, _c, _d, _e, _f, _g, _h;
+    // Format the image URL properly - add data URL prefix for base64 images
+    const rawImageData = ((_b = (_a = response === null || response === void 0 ? void 0 : response.data) === null || _a === void 0 ? void 0 : _a[0]) === null || _b === void 0 ? void 0 : _b.b64_json) || ((_d = (_c = response === null || response === void 0 ? void 0 : response.data) === null || _c === void 0 ? void 0 : _c[0]) === null || _d === void 0 ? void 0 : _d.url) || "";
+    const imageUrl = rawImageData
+        ? rawImageData.startsWith("http://") || rawImageData.startsWith("https://")
+            ? rawImageData
+            : `data:image/png;base64,${rawImageData}`
+        : "";
     const llmSchema = {
         request: {
             model: request.model,
@@ -33,13 +40,24 @@ const mapDalleRequest = ({ request, response, statusCode = 200, model, }) => {
                     json_schema: {},
                 }
                 : undefined,
+            // Add messages array for proper UI rendering
+            messages: request.prompt
+                ? [
+                    {
+                        role: "user",
+                        content: request.prompt,
+                        _type: "message",
+                    },
+                ]
+                : [],
         },
         response: {
             messages: [
                 {
-                    content: ((_b = (_a = response === null || response === void 0 ? void 0 : response.data) === null || _a === void 0 ? void 0 : _a[0]) === null || _b === void 0 ? void 0 : _b.revised_prompt) || "",
+                    role: "assistant",
+                    content: ((_f = (_e = response === null || response === void 0 ? void 0 : response.data) === null || _e === void 0 ? void 0 : _e[0]) === null || _f === void 0 ? void 0 : _f.revised_prompt) || "",
                     _type: "image",
-                    image_url: ((_d = (_c = response === null || response === void 0 ? void 0 : response.data) === null || _c === void 0 ? void 0 : _c[0]) === null || _d === void 0 ? void 0 : _d.b64_json) || ((_f = (_e = response === null || response === void 0 ? void 0 : response.data) === null || _e === void 0 ? void 0 : _e[0]) === null || _f === void 0 ? void 0 : _f.url) || "",
+                    image_url: imageUrl,
                 },
             ],
             model: model,
@@ -60,7 +78,7 @@ const mapDalleRequest = ({ request, response, statusCode = 200, model, }) => {
                     content: ((_h = (_g = response === null || response === void 0 ? void 0 : response.data) === null || _g === void 0 ? void 0 : _g[0]) === null || _h === void 0 ? void 0 : _h.revised_prompt) || "",
                     role: "assistant",
                     _type: "image",
-                    image_url: ((_k = (_j = response === null || response === void 0 ? void 0 : response.data) === null || _j === void 0 ? void 0 : _j[0]) === null || _k === void 0 ? void 0 : _k.b64_json) || ((_m = (_l = response === null || response === void 0 ? void 0 : response.data) === null || _l === void 0 ? void 0 : _l[0]) === null || _m === void 0 ? void 0 : _m.url) || "",
+                    image_url: imageUrl,
                 },
             ],
         },

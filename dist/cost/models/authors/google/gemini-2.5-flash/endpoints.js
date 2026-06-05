@@ -1,0 +1,153 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.endpoints = void 0;
+exports.endpoints = {
+    "gemini-2.5-flash:google-ai-studio": {
+        providerModelId: "gemini-2.5-flash",
+        provider: "google-ai-studio",
+        author: "google",
+        pricing: [
+            {
+                threshold: 0,
+                input: 0.0000003,
+                output: 0.0000025,
+                audio: {
+                    input: 0.000001, // $1/1M audio input tokens
+                    cachedInputMultiplier: 0.1, // $0.1/1M cached audio (10% of input)
+                },
+                cacheMultipliers: {
+                    cachedInput: 0.25,
+                    write5m: 1.0,
+                },
+                cacheStoragePerHour: 0.000001,
+            },
+        ],
+        contextLength: 1048576,
+        maxCompletionTokens: 65535,
+        supportedParameters: [
+            "include_reasoning",
+            "max_tokens",
+            "reasoning",
+            "response_format",
+            "seed",
+            "stop",
+            "structured_outputs",
+            "temperature",
+            "tool_choice",
+            "tools",
+            "top_p",
+        ],
+        rateLimits: {
+            rpm: 10000,
+            tpm: 8000000,
+        },
+        ptbEnabled: true,
+        responseFormat: "GOOGLE",
+        endpointConfigs: {
+            "*": {},
+        },
+    },
+    "gemini-2.5-flash:vertex": {
+        providerModelId: "gemini-2.5-flash",
+        provider: "vertex",
+        author: "google",
+        crossRegion: true,
+        pricing: [
+            {
+                threshold: 0,
+                input: 0.0000003,
+                output: 0.0000025,
+                audio: {
+                    input: 0.000001, // $1/1M audio input tokens
+                    cachedInputMultiplier: 0.1, // $0.1/1M cached audio (10% of input)
+                },
+                cacheMultipliers: {
+                    cachedInput: 0.25,
+                    write5m: 1.0,
+                },
+                cacheStoragePerHour: 0.000001,
+            },
+        ],
+        contextLength: 1048576,
+        maxCompletionTokens: 65535,
+        supportedParameters: [
+            "include_reasoning",
+            "max_tokens",
+            "reasoning",
+            "response_format",
+            "seed",
+            "stop",
+            "structured_outputs",
+            "temperature",
+            "tool_choice",
+            "tools",
+            "top_p",
+        ],
+        responseFormat: "GOOGLE",
+        ptbEnabled: true,
+        endpointConfigs: {
+            global: {
+                providerModelId: "gemini-2.5-flash",
+            },
+        },
+    },
+    "gemini-2.5-flash:openrouter": {
+        provider: "openrouter",
+        author: "google",
+        providerModelId: "google/gemini-2.5-flash",
+        pricing: [
+            {
+                threshold: 0,
+                input: 0.00000032, // $0.32/1M - worst-case: $0.30/1M (Google) * 1.055
+                output: 0.00000264, // $2.64/1M - worst-case: $2.50/1M (Google) * 1.055
+            },
+        ],
+        contextLength: 1048576,
+        maxCompletionTokens: 65535,
+        supportedParameters: [
+            "max_tokens",
+            "response_format",
+            "seed",
+            "stop",
+            "temperature",
+            "tool_choice",
+            "tools",
+            "top_p",
+        ],
+        ptbEnabled: true,
+        endpointConfigs: {
+            "*": {},
+        },
+    },
+    "gemini-2.5-flash:helicone": {
+        provider: "helicone",
+        author: "google",
+        providerModelId: "pa/gmn-2.5-fls-lt-pw-06-17",
+        pricing: [
+            {
+                threshold: 0,
+                input: 0.0000003, // $0.30/1M tokens (same as Google)
+                output: 0.0000025, // $2.50/1M tokens (same as Google)
+            },
+        ],
+        contextLength: 1048576,
+        maxCompletionTokens: 65535,
+        supportedParameters: [
+            "include_reasoning",
+            "max_tokens",
+            "reasoning",
+            "response_format",
+            "seed",
+            "stop",
+            "structured_outputs",
+            "temperature",
+            "tool_choice",
+            "tools",
+            "top_p",
+        ],
+        ptbEnabled: true,
+        endpointConfigs: {
+            "*": {},
+        },
+    },
+};

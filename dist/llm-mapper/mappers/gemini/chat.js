@@ -85,7 +85,7 @@ const getRequestMessages = (contents) => {
             return null;
         const mappedParts = parts
             .map((part) => {
-            var _a, _b;
+            var _a;
             if (!part)
                 return null;
             if (typeof part.text === "string") {
@@ -98,12 +98,9 @@ const getRequestMessages = (contents) => {
             else if ((_a = part.inlineData) === null || _a === void 0 ? void 0 : _a.data) {
                 // Assuming inlineData.data contains the base64 string
                 return {
-                    // NOTE: Setting _type to "file" now as it could be image, pdf, etc.
-                    // The UI will use mime_type to determine specific rendering.
-                    _type: "file",
+                    _type: "image",
                     role: content.role || "user", // Role applied at part level
-                    content: part.inlineData.data, // Store base64 here
-                    mime_type: (_b = part.inlineData) === null || _b === void 0 ? void 0 : _b.mime_type, // Corrected field name to snake_case
+                    image_url: `data:${part.inlineData.mimeType};base64,${part.inlineData.data}`, // Format as data URL
                 };
             }
             // Handle other potential part types like functionCall if needed later
@@ -122,17 +119,14 @@ const getRequestMessages = (contents) => {
             return {
                 _type: "contentArray",
                 role: content.role || "user",
-                contentArray: mappedParts.map((part) => ({
-                    ...part,
-                    role: undefined, // Role is defined on the parent contentArray message
-                })),
+                contentArray: mappedParts, // Keep the role on individual parts
             };
         }
     })
         .filter((message) => message !== null);
 };
 const mapGeminiPro = ({ request, response, statusCode = 200, model, }) => {
-    var _a, _b, _c, _d, _e, _f, _g, _h;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
     const generateConfig = (request === null || request === void 0 ? void 0 : request.generationConfig) || {};
     const contents = request === null || request === void 0 ? void 0 : request.contents;
     const messages = Array.isArray(contents)
@@ -142,7 +136,10 @@ const mapGeminiPro = ({ request, response, statusCode = 200, model, }) => {
     const modelVersion = (!model || model === "unknown") && (response === null || response === void 0 ? void 0 : response.modelVersion)
         ? response.modelVersion
         : model;
-    // Extract system instruction
+    // Extract system instruction and map to "role": "system" message
+    // Note: This mapping only works for requests coming through Helicone's proxy.
+    // For LiteLLM callback integration, system instructions may not be preserved
+    // as LiteLLM processes the request before sending it to Helicone.
     const systemInstructionText = (_c = (_b = (_a = request === null || request === void 0 ? void 0 : request.systemInstruction) === null || _a === void 0 ? void 0 : _a.parts) === null || _b === void 0 ? void 0 : _b[0]) === null || _c === void 0 ? void 0 : _c.text;
     const systemMessage = systemInstructionText
         ? {
@@ -211,22 +208,92 @@ const mapGeminiPro = ({ request, response, statusCode = 200, model, }) => {
     })
         .find((funcCall) => funcCall);
     const firstContent = (_f = (_e = (_d = response[0]) === null || _d === void 0 ? void 0 : _d.candidates) === null || _e === void 0 ? void 0 : _e[0]) === null || _f === void 0 ? void 0 : _f.content;
-    const responseMessages = combinedContent || functionCall
-        ? {
+    // Extract image parts from response
+    const imageParts = [];
+    response.forEach((resp) => {
+        if (!resp || !Array.isArray(resp.candidates))
+            return;
+        resp.candidates.forEach((candidate) => {
+            if (!candidate)
+                return;
+            const contents = Array.isArray(candidate.content)
+                ? candidate.content
+                : [candidate.content].filter(Boolean);
+            contents.forEach((content) => {
+                if (!content)
+                    return;
+                const parts = Array.isArray(content.parts)
+                    ? content.parts
+                    : [content.parts].filter(Boolean);
+                parts.forEach((part) => {
+                    var _a;
+                    if ((_a = part === null || part === void 0 ? void 0 : part.inlineData) === null || _a === void 0 ? void 0 : _a.data) {
+                        const mimeType = part.inlineData.mimeType || "image/png";
+                        imageParts.push({
+                            _type: "image",
+                            role: content.role || "model",
+                            mime_type: mimeType,
+                            image_url: `data:${mimeType};base64,${part.inlineData.data}`,
+                        });
+                    }
+                });
+            });
+        });
+    });
+    // Build response messages based on what we have
+    let responseMessages;
+    if (functionCall) {
+        // Function call response
+        responseMessages = {
             role: (_g = firstContent === null || firstContent === void 0 ? void 0 : firstContent.role) !== null && _g !== void 0 ? _g : "model",
             content: combinedContent || undefined,
-            tool_calls: functionCall
-                ? [
-                    {
-                        name: functionCall.name,
-                        arguments: JSON.parse(JSON.stringify(functionCall.args)),
-                    },
-                ]
-                : undefined,
-            _type: functionCall ? "functionCall" : "message",
+            tool_calls: [
+                {
+                    name: functionCall.name,
+                    arguments: JSON.parse(JSON.stringify(functionCall.args)),
+                },
+            ],
+            _type: "functionCall",
+        };
+    }
+    else if (imageParts.length > 0 && combinedContent) {
+        // Mixed text + image response - use contentArray
+        const contentArray = [
+            {
+                _type: "message",
+                role: (_h = firstContent === null || firstContent === void 0 ? void 0 : firstContent.role) !== null && _h !== void 0 ? _h : "model",
+                content: combinedContent,
+            },
+            ...imageParts,
+        ];
+        responseMessages = {
+            _type: "contentArray",
+            role: (_j = firstContent === null || firstContent === void 0 ? void 0 : firstContent.role) !== null && _j !== void 0 ? _j : "model",
+            contentArray,
+        };
+    }
+    else if (imageParts.length > 0) {
+        // Image only response
+        if (imageParts.length === 1) {
+            responseMessages = imageParts[0];
         }
-        : undefined;
-    const error = (_h = response.find((item) => item === null || item === void 0 ? void 0 : item.error)) === null || _h === void 0 ? void 0 : _h.error;
+        else {
+            responseMessages = {
+                _type: "contentArray",
+                role: (_k = firstContent === null || firstContent === void 0 ? void 0 : firstContent.role) !== null && _k !== void 0 ? _k : "model",
+                contentArray: imageParts,
+            };
+        }
+    }
+    else if (combinedContent) {
+        // Text only response
+        responseMessages = {
+            role: (_l = firstContent === null || firstContent === void 0 ? void 0 : firstContent.role) !== null && _l !== void 0 ? _l : "model",
+            content: combinedContent,
+            _type: "message",
+        };
+    }
+    const error = (_m = response.find((item) => item === null || item === void 0 ? void 0 : item.error)) === null || _m === void 0 ? void 0 : _m.error;
     const schema = {
         request: {
             model: modelVersion,

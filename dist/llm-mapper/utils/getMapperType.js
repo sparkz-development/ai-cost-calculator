@@ -14,17 +14,29 @@ const isRealtimeRequest = (request) => {
         ((_c = (_b = request.response_body) === null || _b === void 0 ? void 0 : _b.messages) === null || _c === void 0 ? void 0 : _c.some((msg) => { var _a; return ((_a = msg.content) === null || _a === void 0 ? void 0 : _a.type) === "session.created"; })));
 };
 const getMapperTypeFromHeliconeRequest = (heliconeRequest, model) => {
-    var _a, _b, _c, _d, _e;
+    var _a, _b, _c, _d, _e, _f;
     if (((_a = heliconeRequest.request_body) === null || _a === void 0 ? void 0 : _a._type) === "vector_db") {
         return "vector-db";
     }
     if (((_b = heliconeRequest.request_body) === null || _b === void 0 ? void 0 : _b._type) === "tool") {
         return "tool";
     }
+    if (((_c = heliconeRequest.request_body) === null || _c === void 0 ? void 0 : _c._type) === "data") {
+        return "data";
+    }
+    if (heliconeRequest.request_referrer === "ai-gateway") {
+        const bodyMapping = heliconeRequest.ai_gateway_body_mapping;
+        if (bodyMapping === "RESPONSES") {
+            return "ai-gateway-responses";
+        }
+        else if (bodyMapping === "OPENAI") {
+            return "ai-gateway-chat";
+        }
+    }
     // Check for OpenAI Assistant responses
-    if (((_c = heliconeRequest.response_body) === null || _c === void 0 ? void 0 : _c.object) === "thread.run" ||
-        ((_d = heliconeRequest.response_body) === null || _d === void 0 ? void 0 : _d.assistant_id) ||
-        ((_e = heliconeRequest.response_body) === null || _e === void 0 ? void 0 : _e.thread_id)) {
+    if (((_d = heliconeRequest.response_body) === null || _d === void 0 ? void 0 : _d.object) === "thread.run" ||
+        ((_e = heliconeRequest.response_body) === null || _e === void 0 ? void 0 : _e.assistant_id) ||
+        ((_f = heliconeRequest.response_body) === null || _f === void 0 ? void 0 : _f.thread_id)) {
         return "openai-assistant";
     }
     // Check for realtime responses
@@ -37,14 +49,18 @@ const getMapperTypeFromHeliconeRequest = (heliconeRequest, model) => {
         path: heliconeRequest.request_path,
         isAssistant: isAssistantRequest(heliconeRequest),
         targetUrl: heliconeRequest.target_url,
+        requestReferrer: heliconeRequest.request_referrer,
     });
 };
 exports.getMapperTypeFromHeliconeRequest = getMapperTypeFromHeliconeRequest;
-const getMapperType = ({ model, provider, path, isAssistant, targetUrl, }) => {
+const getMapperType = ({ model, provider, path, isAssistant, targetUrl, requestReferrer, }) => {
     if (targetUrl &&
         targetUrl.includes("chat/completions") &&
         provider === "GOOGLE") {
         return "openai-chat";
+    }
+    if (provider === "VERCEL") {
+        return "vercel-chat";
     }
     if (!model) {
         return "openai-chat";
@@ -60,6 +76,12 @@ const getMapperType = ({ model, provider, path, isAssistant, targetUrl, }) => {
     }
     if (model === "vector_db") {
         return "vector-db";
+    }
+    if (model.startsWith("tool:")) {
+        return "tool";
+    }
+    if (model.startsWith("data:")) {
+        return "data";
     }
     if (/^gpt-3\.5-turbo-instruct/.test(model)) {
         return "openai-instruct";
@@ -93,6 +115,13 @@ const getMapperType = ({ model, provider, path, isAssistant, targetUrl, }) => {
             (model.includes("claude") || model.includes("anthropic")))) {
         return "anthropic-chat";
     }
+    if (provider === "NVIDIA") {
+        return "openai-chat";
+    }
+    // Check for any Llama API model
+    if (/^Llama/.test(model) || model.includes("Llama") || provider === "LLAMA") {
+        return "llama-chat";
+    }
     if (isAssistant) {
         return "openai-assistant";
     }
@@ -103,7 +132,9 @@ const getMapperType = ({ model, provider, path, isAssistant, targetUrl, }) => {
         }
         return "gemini-chat";
     }
-    if (model === "dall-e-3" || model === "dall-e-2") {
+    if (model === "dall-e-3" ||
+        model === "dall-e-2" ||
+        model.startsWith("gpt-image-1")) {
         return "openai-image";
     }
     if (/^text-moderation(-\[\w+\]|-\d+)?$/.test(model)) {

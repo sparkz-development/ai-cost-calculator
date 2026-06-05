@@ -2,7 +2,7 @@ import { LlmSchema } from "../../types";
 /**
  * Simplified interface for the OpenAI Chat request format
  */
-interface OpenAIChatRequest {
+export interface OpenAIChatRequest {
     model?: string;
     messages?: {
         role: string;
@@ -12,8 +12,17 @@ interface OpenAIChatRequest {
             image_url?: {
                 url: string;
             };
-        }>;
+        }> | null;
         name?: string;
+        tool_call_id?: string;
+        tool_calls?: {
+            id: string;
+            function: {
+                name: string;
+                arguments: string;
+            };
+            type: "function";
+        }[];
     }[];
     temperature?: number;
     top_p?: number;
@@ -25,8 +34,9 @@ interface OpenAIChatRequest {
         type: "function";
         function: {
             name: string;
-            description: string;
-            parameters: Record<string, any>;
+            description?: string;
+            parameters?: Record<string, any>;
+            strict?: boolean;
         };
     }[];
     tool_choice?: "none" | "auto" | "required" | {
@@ -37,7 +47,8 @@ interface OpenAIChatRequest {
         };
     };
     parallel_tool_calls?: boolean;
-    reasoning_effort?: "low" | "medium" | "high";
+    reasoning_effort?: "minimal" | "low" | "medium" | "high";
+    verbosity?: "low" | "medium" | "high";
     frequency_penalty?: number;
     presence_penalty?: number;
     logit_bias?: Record<string, number>;
@@ -65,7 +76,7 @@ interface OpenAIChatRequest {
 /**
  * Build the simplified OpenAI Chat mapper with proper type safety
  */
-export declare const openaiChatMapper: import("../../path-mapper").PathMapper<OpenAIChatRequest, import("../../types").LLMRequestBody>;
+export declare const openaiChatMapper: import("index").PathMapper<OpenAIChatRequest, import("../../types").LLMRequestBody>;
 /**
  * Maps an OpenAI request to our internal format
  */
@@ -75,4 +86,3 @@ export declare const mapOpenAIRequestV2: ({ request, response, model, }: {
     statusCode?: number;
     model: string;
 }) => LlmSchema;
-export {};

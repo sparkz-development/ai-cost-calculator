@@ -37,6 +37,8 @@ export interface ModelRow {
         prompt_cache_read_token?: number;
         prompt_audio_token?: number;
         completion_audio_token?: number;
+        prompt_cache_creation_5m?: number;
+        prompt_cache_creation_1h?: number;
     };
     showInPlayground?: boolean;
     targetUrl?: string;

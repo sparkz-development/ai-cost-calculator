@@ -1,0 +1,55 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.endpoints = void 0;
+exports.endpoints = {
+    "o1:helicone": {
+        provider: "helicone",
+        author: "openai",
+        providerModelId: "pa/p1",
+        pricing: [
+            {
+                threshold: 0,
+                input: 0.000015, // $15.00 per 1M tokens
+                output: 0.00006, // $60.00 per 1M tokens
+                web_search: 0.01, // $10 per 1000 searches (1:1 USD; 10/1K)
+                cacheMultipliers: {
+                    cachedInput: 0.5, // $7.50 per 1M tokens
+                },
+            },
+        ],
+        contextLength: 200000,
+        maxCompletionTokens: 100000,
+        supportedParameters: [
+            "max_tokens",
+        ],
+        ptbEnabled: true,
+        endpointConfigs: {
+            "*": {},
+        },
+    },
+    "o1-mini:helicone": {
+        provider: "helicone",
+        author: "openai",
+        providerModelId: "pa/p1-m",
+        pricing: [
+            {
+                threshold: 0,
+                input: 0.0000011, // $1.10 per 1M tokens
+                output: 0.0000044, // $4.40 per 1M tokens
+                web_search: 0.01, // $10 per 1000 searches (1:1 USD; 10/1K)
+                cacheMultipliers: {
+                    cachedInput: 0.5, // $0.55 per 1M tokens
+                },
+            },
+        ],
+        contextLength: 128000,
+        maxCompletionTokens: 65536,
+        supportedParameters: [
+            "max_tokens",
+        ],
+        ptbEnabled: true,
+        endpointConfigs: {
+            "*": {},
+        },
+    },
+};

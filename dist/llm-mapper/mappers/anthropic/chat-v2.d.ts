@@ -32,7 +32,7 @@ interface AnthropicChatRequest {
 /**
  * Build the simplified Anthropic Chat mapper with proper type safety
  */
-export declare const anthropicChatMapper: import("../../path-mapper").PathMapper<AnthropicChatRequest, import("../../types").LLMRequestBody>;
+export declare const anthropicChatMapper: import("index").PathMapper<AnthropicChatRequest, import("../../types").LLMRequestBody>;
 /**
  * Maps an Anthropic request to our internal format
  */

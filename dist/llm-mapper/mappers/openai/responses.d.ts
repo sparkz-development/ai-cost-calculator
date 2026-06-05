@@ -24,7 +24,10 @@ interface OpenAIResponseRequest {
     parallel_tool_calls?: boolean;
     previous_response_id?: string;
     reasoning?: {
-        effort?: "low" | "medium" | "high";
+        effort?: "low" | "medium" | "high" | "minimal";
+    };
+    text?: {
+        verbosity?: "low" | "medium" | "high";
     };
     store?: boolean;
     stream?: boolean;
@@ -65,7 +68,18 @@ interface OpenAIResponseRequest {
     };
     functions?: Array<any>;
 }
-export declare const openaiResponseMapper: import("../../path-mapper").PathMapper<OpenAIResponseRequest, import("../../types").LLMRequestBody>;
+/**
+ * Generate a human-readable preview text for Requests API requests.
+ * Mirrors the intent of getRequestText in chat.ts, but adapted to the
+ * Responses API where the request payload uses `input` instead of `messages`.
+ */
+export declare const getRequestText: (requestBody: OpenAIResponseRequest) => string;
+/**
+ * Generate a human-readable preview text for Responses API responses.
+ * Similar to getResponseText in chat.ts, but tailored to `output` format.
+ */
+export declare const getResponseText: (responseBody: any, statusCode?: number) => string;
+export declare const openaiResponseMapper: import("index").PathMapper<OpenAIResponseRequest, import("../../types").LLMRequestBody>;
 export declare const mapOpenAIResponse: ({ request, response, model, }: {
     request: OpenAIResponseRequest;
     response: any;
