@@ -14,7 +14,7 @@
   "author": "Justin <justintorre75@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && tsc-alias",
     "test": "jest",
     "copy-cost": "./copy-packages.sh -p cost",
     "copy-llm-mapper": "./copy-packages.sh -p llm-mapper",
@@ -28,6 +28,7 @@
     "nodemon": "^3.1.0",
     "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
+    "tsc-alias": "^1.8.8",
     "typescript": "^5.4.2"
   }
 }

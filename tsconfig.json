@@ -12,8 +12,17 @@
     "resolveJsonModule": true,
     "moduleResolution": "node",
     "isolatedModules": true,
-    "incremental": true
+    "incremental": true,
+    "baseUrl": ".",
+    "paths": {
+      "@helicone-package/cost/*": ["./cost/*"],
+      "@helicone-package/llm-mapper/*": ["./llm-mapper/*"],
+      "@helicone-package/prompts/*": ["./prompts/*"],
+      "@helicone-package/common/*": ["./common/*"],
+      "@helicone-package/pricing/*": ["./pricing/*"]
+    },
+    "lib": ["es2021", "dom"]
   },
-  "include": ["cost/**/*.ts", "llm-mapper/**/*.ts", "index.ts"],
+  "include": ["cost/**/*.ts", "llm-mapper/**/*.ts", "common/**/*.ts", "prompts/**/*.ts", "pricing/**/*.ts", "index.ts"],
   "exclude": ["node_modules", "**/__tests__/*", "dist"]
 }
