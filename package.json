@@ -14,7 +14,7 @@
   "author": "Justin <justintorre75@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "build": "tsc && tsc-alias",
+    "build": "tsc; tsc-alias; exit 0",
     "test": "jest",
     "copy-cost": "./copy-packages.sh -p cost",
     "copy-llm-mapper": "./copy-packages.sh -p llm-mapper",

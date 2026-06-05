@@ -21,7 +21,7 @@
       "@helicone-package/common/*": ["./common/*"],
       "@helicone-package/pricing/*": ["./pricing/*"]
     },
-    "lib": ["es2021", "dom"]
+    "lib": ["es2021", "dom", "dom.iterable"]
   },
   "include": ["cost/**/*.ts", "llm-mapper/**/*.ts", "common/**/*.ts", "prompts/**/*.ts", "pricing/**/*.ts", "index.ts"],
   "exclude": ["node_modules", "**/__tests__/*", "dist"]
