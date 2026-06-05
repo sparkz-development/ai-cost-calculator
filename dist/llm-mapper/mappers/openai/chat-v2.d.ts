@@ -76,7 +76,7 @@ export interface OpenAIChatRequest {
 /**
  * Build the simplified OpenAI Chat mapper with proper type safety
  */
-export declare const openaiChatMapper: import("index").PathMapper<OpenAIChatRequest, import("../../types").LLMRequestBody>;
+export declare const openaiChatMapper: import("../../../index").PathMapper<OpenAIChatRequest, import("../../types").LLMRequestBody>;
 /**
  * Maps an OpenAI request to our internal format
  */

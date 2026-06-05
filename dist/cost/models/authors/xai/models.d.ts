@@ -46,7 +46,7 @@ export declare const models: {
         maxOutputTokens: number;
         created: string;
         modality: {
-            inputs: ("text" | "image" | "audio")[];
+            inputs: ("text" | "audio" | "image")[];
             outputs: "text"[];
         };
         tokenizer: "Grok";

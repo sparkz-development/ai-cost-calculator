@@ -15,7 +15,7 @@ export declare const endpoints: {
         };
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "stop" | "presence_penalty" | "frequency_penalty" | "response_format" | "top_k" | "repetition_penalty" | "seed" | "min_p")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "frequency_penalty" | "presence_penalty" | "response_format" | "seed" | "stop" | "top_k" | "repetition_penalty" | "min_p")[];
         ptbEnabled: true;
         quantization: "fp8";
         endpointConfigs: {

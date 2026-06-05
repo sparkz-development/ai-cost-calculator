@@ -1,3 +1,3 @@
 import { GeminiGenerateContentRequest } from "../../../types/google";
-import { HeliconeChatCreateParams } from "@helicone-package/prompts/types";
+import { HeliconeChatCreateParams } from "../../../../../prompts/types";
 export declare function toGoogle(openAIBody: HeliconeChatCreateParams): GeminiGenerateContentRequest;

@@ -1,4 +1,4 @@
-import { CacheControl } from "@helicone-package/prompts/types";
+import { CacheControl } from "../../../prompts/types";
 export type Role = "system" | "user" | "assistant" | "function" | "tool";
 export type AnthropicStopReason = "end_turn" | "max_tokens" | "stop_sequence" | "tool_use" | "pause_turn" | "refusal" | null;
 export type OpenAIFinishReason = "stop" | "length" | "function_call" | "content_filter" | "tool_calls" | null;

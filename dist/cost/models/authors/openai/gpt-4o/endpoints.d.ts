@@ -19,7 +19,7 @@ export declare const endpoints: {
         };
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "stop" | "presence_penalty" | "frequency_penalty" | "response_format" | "seed")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "frequency_penalty" | "presence_penalty" | "response_format" | "seed" | "stop")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};
@@ -44,7 +44,7 @@ export declare const endpoints: {
             rpm: number;
             tpm: number;
         };
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "stop" | "presence_penalty" | "frequency_penalty" | "response_format" | "seed")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "frequency_penalty" | "presence_penalty" | "response_format" | "seed" | "stop")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};
@@ -70,7 +70,7 @@ export declare const endpoints: {
         };
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "stop" | "presence_penalty" | "frequency_penalty" | "response_format" | "seed")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "frequency_penalty" | "presence_penalty" | "response_format" | "seed" | "stop")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};
@@ -95,7 +95,7 @@ export declare const endpoints: {
             rpm: number;
             tpm: number;
         };
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "stop" | "presence_penalty" | "frequency_penalty" | "response_format" | "seed")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "frequency_penalty" | "presence_penalty" | "response_format" | "seed" | "stop")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};
@@ -121,7 +121,7 @@ export declare const endpoints: {
         };
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "stop" | "presence_penalty" | "frequency_penalty" | "response_format" | "seed")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "frequency_penalty" | "presence_penalty" | "response_format" | "seed" | "stop")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};
@@ -139,7 +139,7 @@ export declare const endpoints: {
         }[];
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "stop" | "presence_penalty" | "frequency_penalty" | "response_format" | "seed")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "frequency_penalty" | "presence_penalty" | "response_format" | "seed" | "stop")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};
@@ -157,7 +157,7 @@ export declare const endpoints: {
         }[];
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "stop" | "presence_penalty" | "frequency_penalty" | "response_format" | "seed")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "frequency_penalty" | "presence_penalty" | "response_format" | "seed" | "stop")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};
@@ -175,7 +175,7 @@ export declare const endpoints: {
         }[];
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "stop" | "presence_penalty" | "frequency_penalty" | "response_format" | "seed")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "frequency_penalty" | "presence_penalty" | "response_format" | "seed" | "stop")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};
@@ -196,7 +196,7 @@ export declare const endpoints: {
         }[];
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "stop" | "presence_penalty" | "frequency_penalty")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "frequency_penalty" | "presence_penalty" | "stop")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};
@@ -217,7 +217,7 @@ export declare const endpoints: {
         }[];
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "stop" | "presence_penalty" | "frequency_penalty")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "frequency_penalty" | "presence_penalty" | "stop")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};

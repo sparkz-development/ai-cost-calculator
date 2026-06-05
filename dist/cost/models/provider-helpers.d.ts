@@ -2,7 +2,7 @@ import { Result } from "../../common/result";
 import type { Endpoint, ModelProviderConfig, UserEndpointConfig, AuthContext, AuthResult, RequestBodyContext, RequestParams, ModelSpec } from "./types";
 import { ModelProviderName } from "./providers";
 import { BaseProvider } from "./providers/base";
-import { Provider } from "@helicone-package/llm-mapper/types";
+import { Provider } from "../../llm-mapper/types";
 import { CacheProvider } from "../../common/cache/provider";
 export declare function heliconeProviderToModelProviderName(provider: Provider): ModelProviderName | null;
 export declare function getProvider(providerName: string): Result<BaseProvider>;

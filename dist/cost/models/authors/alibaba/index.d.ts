@@ -37,7 +37,7 @@ export declare const alibabaModels: {
         maxOutputTokens: number;
         created: string;
         modality: {
-            inputs: ("text" | "image" | "audio" | "video")[];
+            inputs: ("text" | "audio" | "image" | "video")[];
             outputs: "text"[];
         };
         tokenizer: "Qwen";
@@ -120,7 +120,7 @@ export declare const alibabaEndpointConfig: {
         }[];
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "stop" | "presence_penalty" | "frequency_penalty" | "response_format" | "top_k" | "repetition_penalty" | "seed" | "reasoning" | "include_reasoning" | "min_p" | "logit_bias" | "logprobs" | "top_logprobs" | "structured_outputs")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "frequency_penalty" | "logit_bias" | "logprobs" | "presence_penalty" | "response_format" | "seed" | "stop" | "top_logprobs" | "top_k" | "repetition_penalty" | "reasoning" | "include_reasoning" | "min_p" | "structured_outputs")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};
@@ -137,7 +137,7 @@ export declare const alibabaEndpointConfig: {
         }[];
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "stop" | "presence_penalty" | "frequency_penalty" | "seed" | "logprobs" | "top_logprobs")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "frequency_penalty" | "logprobs" | "presence_penalty" | "seed" | "stop" | "top_logprobs")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};
@@ -159,7 +159,7 @@ export declare const alibabaEndpointConfig: {
         };
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "stop" | "presence_penalty" | "frequency_penalty" | "response_format" | "top_k" | "repetition_penalty" | "seed" | "min_p")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "frequency_penalty" | "presence_penalty" | "response_format" | "seed" | "stop" | "top_k" | "repetition_penalty" | "min_p")[];
         ptbEnabled: true;
         quantization: "fp8";
         endpointConfigs: {
@@ -182,7 +182,7 @@ export declare const alibabaEndpointConfig: {
         };
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "stop" | "presence_penalty" | "frequency_penalty" | "response_format" | "top_k" | "repetition_penalty" | "seed" | "min_p")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "frequency_penalty" | "presence_penalty" | "response_format" | "seed" | "stop" | "top_k" | "repetition_penalty" | "min_p")[];
         ptbEnabled: true;
         quantization: "fp4";
         endpointConfigs: {
@@ -200,7 +200,7 @@ export declare const alibabaEndpointConfig: {
         }[];
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "stop" | "presence_penalty" | "frequency_penalty" | "response_format" | "top_k" | "repetition_penalty" | "seed" | "min_p")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "frequency_penalty" | "presence_penalty" | "response_format" | "seed" | "stop" | "top_k" | "repetition_penalty" | "min_p")[];
         ptbEnabled: true;
         quantization: "fp8";
         endpointConfigs: {
@@ -224,7 +224,7 @@ export declare const alibabaEndpointConfig: {
         quantization: "bf16";
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "stop" | "presence_penalty" | "frequency_penalty" | "response_format" | "top_k" | "repetition_penalty" | "seed" | "min_p")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "frequency_penalty" | "presence_penalty" | "response_format" | "seed" | "stop" | "top_k" | "repetition_penalty" | "min_p")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};
@@ -247,7 +247,7 @@ export declare const alibabaEndpointConfig: {
         quantization: "fp8";
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "stop" | "presence_penalty" | "frequency_penalty" | "response_format" | "top_k" | "repetition_penalty" | "seed" | "min_p")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "frequency_penalty" | "presence_penalty" | "response_format" | "seed" | "stop" | "top_k" | "repetition_penalty" | "min_p")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};
@@ -265,7 +265,7 @@ export declare const alibabaEndpointConfig: {
         quantization: "fp8";
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "stop" | "presence_penalty" | "frequency_penalty" | "response_format" | "top_k" | "repetition_penalty" | "seed" | "functions" | "reasoning" | "min_p" | "structured_outputs")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "frequency_penalty" | "functions" | "presence_penalty" | "response_format" | "seed" | "stop" | "top_k" | "repetition_penalty" | "reasoning" | "min_p" | "structured_outputs")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};
@@ -283,7 +283,7 @@ export declare const alibabaEndpointConfig: {
         quantization: "bf16";
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "stop" | "presence_penalty" | "frequency_penalty" | "response_format" | "top_k" | "repetition_penalty" | "seed" | "min_p" | "logit_bias" | "structured_outputs")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "frequency_penalty" | "logit_bias" | "presence_penalty" | "response_format" | "seed" | "stop" | "top_k" | "repetition_penalty" | "min_p" | "structured_outputs")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};
@@ -301,7 +301,7 @@ export declare const alibabaEndpointConfig: {
         quantization: "fp8";
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "stop" | "presence_penalty" | "frequency_penalty" | "top_k" | "seed" | "logit_bias" | "logprobs" | "top_logprobs")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "frequency_penalty" | "logit_bias" | "logprobs" | "presence_penalty" | "seed" | "stop" | "top_logprobs" | "top_k")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};
@@ -318,7 +318,7 @@ export declare const alibabaEndpointConfig: {
         }[];
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "stop" | "presence_penalty" | "frequency_penalty" | "response_format" | "top_k" | "seed" | "logit_bias" | "logprobs" | "top_logprobs" | "structured_outputs")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "frequency_penalty" | "logit_bias" | "logprobs" | "presence_penalty" | "response_format" | "seed" | "stop" | "top_logprobs" | "top_k" | "structured_outputs")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};

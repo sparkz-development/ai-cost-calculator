@@ -123,8 +123,8 @@ class OpenAIUsageProcessor {
         const usage = parsedResponse.usage || {};
         // This usage processor is applied to all AI Gateway requests when logging tokens from Jawn
         // this means the processor must properly handle additional AI Gateway only info
-        // OpenAIUsage from "@helicone-package/llm-mapper/transform/types/common";
-        // ResponsesUsage from "@helicone-package/llm-mapper/transform/types/responses";
+        // OpenAIUsage from "../../llm-mapper/transform/types/common";
+        // ResponsesUsage from "../../llm-mapper/transform/types/responses";
         const promptTokens = (_b = (_a = usage.prompt_tokens) !== null && _a !== void 0 ? _a : usage.input_tokens) !== null && _b !== void 0 ? _b : 0;
         const completionTokens = (_d = (_c = usage.completion_tokens) !== null && _c !== void 0 ? _c : usage.output_tokens) !== null && _d !== void 0 ? _d : 0;
         const promptDetails = usage.prompt_tokens_details || usage.input_tokens_details || {};

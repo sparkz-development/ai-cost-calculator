@@ -71,7 +71,7 @@ export declare const moonshotaiEndpointConfig: {
         }[];
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "stop" | "presence_penalty" | "frequency_penalty" | "response_format" | "top_k" | "repetition_penalty" | "logit_bias" | "logprobs" | "top_logprobs" | "structured_outputs")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "frequency_penalty" | "logit_bias" | "logprobs" | "presence_penalty" | "response_format" | "stop" | "top_logprobs" | "top_k" | "repetition_penalty" | "structured_outputs")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};
@@ -88,7 +88,7 @@ export declare const moonshotaiEndpointConfig: {
         }[];
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "stop" | "presence_penalty" | "frequency_penalty" | "response_format" | "seed" | "logprobs" | "top_logprobs")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "frequency_penalty" | "logprobs" | "presence_penalty" | "response_format" | "seed" | "stop" | "top_logprobs")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};
@@ -105,7 +105,7 @@ export declare const moonshotaiEndpointConfig: {
         }[];
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "max_tokens" | "tools" | "tool_choice" | "stop" | "presence_penalty" | "frequency_penalty" | "response_format" | "top_k" | "repetition_penalty" | "seed" | "functions" | "min_p" | "logit_bias" | "structured_outputs")[];
+        supportedParameters: ("temperature" | "max_tokens" | "tools" | "tool_choice" | "frequency_penalty" | "functions" | "logit_bias" | "presence_penalty" | "response_format" | "seed" | "stop" | "top_k" | "repetition_penalty" | "min_p" | "structured_outputs")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};
@@ -125,7 +125,7 @@ export declare const moonshotaiEndpointConfig: {
         }[];
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "stop" | "presence_penalty" | "frequency_penalty" | "response_format" | "top_k" | "repetition_penalty" | "seed" | "min_p" | "logit_bias" | "logprobs" | "top_logprobs" | "structured_outputs")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "frequency_penalty" | "logit_bias" | "logprobs" | "presence_penalty" | "response_format" | "seed" | "stop" | "top_logprobs" | "top_k" | "repetition_penalty" | "min_p" | "structured_outputs")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};
@@ -146,7 +146,7 @@ export declare const moonshotaiEndpointConfig: {
         quantization: "fp4";
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "stop" | "presence_penalty" | "frequency_penalty" | "response_format" | "top_k" | "repetition_penalty" | "seed" | "min_p")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "frequency_penalty" | "presence_penalty" | "response_format" | "seed" | "stop" | "top_k" | "repetition_penalty" | "min_p")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};
@@ -163,7 +163,7 @@ export declare const moonshotaiEndpointConfig: {
         }[];
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "stop" | "presence_penalty" | "frequency_penalty" | "response_format" | "seed" | "logprobs" | "top_logprobs")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "frequency_penalty" | "logprobs" | "presence_penalty" | "response_format" | "seed" | "stop" | "top_logprobs")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};
@@ -180,7 +180,7 @@ export declare const moonshotaiEndpointConfig: {
         }[];
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "stop" | "presence_penalty" | "frequency_penalty" | "response_format" | "seed" | "logprobs" | "top_logprobs")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "frequency_penalty" | "logprobs" | "presence_penalty" | "response_format" | "seed" | "stop" | "top_logprobs")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};
@@ -197,7 +197,7 @@ export declare const moonshotaiEndpointConfig: {
         }[];
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "max_tokens" | "tools" | "tool_choice" | "stop" | "presence_penalty" | "frequency_penalty" | "response_format" | "top_k" | "repetition_penalty" | "seed" | "functions" | "min_p" | "logit_bias" | "structured_outputs")[];
+        supportedParameters: ("temperature" | "max_tokens" | "tools" | "tool_choice" | "frequency_penalty" | "functions" | "logit_bias" | "presence_penalty" | "response_format" | "seed" | "stop" | "top_k" | "repetition_penalty" | "min_p" | "structured_outputs")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};
@@ -215,7 +215,7 @@ export declare const moonshotaiEndpointConfig: {
         contextLength: number;
         maxCompletionTokens: number;
         quantization: "fp4";
-        supportedParameters: ("temperature" | "max_tokens" | "tools" | "tool_choice" | "stop" | "response_format" | "structured_outputs")[];
+        supportedParameters: ("temperature" | "max_tokens" | "tools" | "tool_choice" | "response_format" | "stop" | "structured_outputs")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};
@@ -232,7 +232,7 @@ export declare const moonshotaiEndpointConfig: {
         }[];
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "stop" | "presence_penalty" | "frequency_penalty" | "response_format" | "top_k" | "repetition_penalty" | "logit_bias" | "logprobs" | "top_logprobs" | "structured_outputs")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "frequency_penalty" | "logit_bias" | "logprobs" | "presence_penalty" | "response_format" | "stop" | "top_logprobs" | "top_k" | "repetition_penalty" | "structured_outputs")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};
@@ -250,7 +250,7 @@ export declare const moonshotaiEndpointConfig: {
         quantization: "fp8";
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "stop" | "presence_penalty" | "frequency_penalty" | "response_format" | "top_k" | "repetition_penalty" | "seed" | "structured_outputs")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "frequency_penalty" | "presence_penalty" | "response_format" | "seed" | "stop" | "top_k" | "repetition_penalty" | "structured_outputs")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};
@@ -268,7 +268,7 @@ export declare const moonshotaiEndpointConfig: {
         quantization: "bf16";
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "stop" | "presence_penalty" | "frequency_penalty" | "response_format" | "structured_outputs")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "frequency_penalty" | "presence_penalty" | "response_format" | "stop" | "structured_outputs")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};
@@ -286,7 +286,7 @@ export declare const moonshotaiEndpointConfig: {
         quantization: "bf16";
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "stop" | "presence_penalty" | "frequency_penalty" | "response_format" | "structured_outputs")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "frequency_penalty" | "presence_penalty" | "response_format" | "stop" | "structured_outputs")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};
@@ -304,7 +304,7 @@ export declare const moonshotaiEndpointConfig: {
         quantization: "fp8";
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "stop" | "presence_penalty" | "frequency_penalty" | "response_format" | "top_k" | "repetition_penalty" | "seed" | "min_p")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "frequency_penalty" | "presence_penalty" | "response_format" | "seed" | "stop" | "top_k" | "repetition_penalty" | "min_p")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};
@@ -322,7 +322,7 @@ export declare const moonshotaiEndpointConfig: {
         quantization: "int4";
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "stop" | "presence_penalty" | "frequency_penalty" | "response_format" | "top_k" | "repetition_penalty" | "logit_bias" | "logprobs" | "top_logprobs" | "structured_outputs")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "frequency_penalty" | "logit_bias" | "logprobs" | "presence_penalty" | "response_format" | "stop" | "top_logprobs" | "top_k" | "repetition_penalty" | "structured_outputs")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};

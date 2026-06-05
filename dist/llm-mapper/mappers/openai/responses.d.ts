@@ -79,7 +79,7 @@ export declare const getRequestText: (requestBody: OpenAIResponseRequest) => str
  * Similar to getResponseText in chat.ts, but tailored to `output` format.
  */
 export declare const getResponseText: (responseBody: any, statusCode?: number) => string;
-export declare const openaiResponseMapper: import("index").PathMapper<OpenAIResponseRequest, import("../../types").LLMRequestBody>;
+export declare const openaiResponseMapper: import("../../../index").PathMapper<OpenAIResponseRequest, import("../../types").LLMRequestBody>;
 export declare const mapOpenAIResponse: ({ request, response, model, }: {
     request: OpenAIResponseRequest;
     response: any;

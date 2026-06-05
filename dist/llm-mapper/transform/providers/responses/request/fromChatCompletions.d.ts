@@ -1,5 +1,5 @@
 import { ResponsesRequestBody } from "../../../types/responses";
-import { HeliconeChatCreateParams } from "@helicone-package/prompts/types";
+import { HeliconeChatCreateParams } from "../../../../../prompts/types";
 /**
  * Converts a Chat Completions request body to Responses API format.
  *

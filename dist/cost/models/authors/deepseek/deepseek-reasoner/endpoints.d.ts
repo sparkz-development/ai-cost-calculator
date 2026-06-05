@@ -14,7 +14,7 @@ export declare const endpoints: {
         quantization: "fp4";
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "stop" | "presence_penalty" | "frequency_penalty" | "response_format" | "stream" | "seed" | "logprobs" | "top_logprobs")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "stream" | "frequency_penalty" | "logprobs" | "presence_penalty" | "response_format" | "seed" | "stop" | "top_logprobs")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};
@@ -31,7 +31,7 @@ export declare const endpoints: {
         }[];
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "stop" | "presence_penalty" | "frequency_penalty" | "response_format" | "stream" | "seed" | "logprobs" | "top_logprobs")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "stream" | "frequency_penalty" | "logprobs" | "presence_penalty" | "response_format" | "seed" | "stop" | "top_logprobs")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};
@@ -56,7 +56,7 @@ export declare const endpoints: {
         };
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "stop" | "presence_penalty" | "frequency_penalty" | "response_format" | "top_k" | "repetition_penalty" | "seed" | "min_p")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "frequency_penalty" | "presence_penalty" | "response_format" | "seed" | "stop" | "top_k" | "repetition_penalty" | "min_p")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};
@@ -73,7 +73,7 @@ export declare const endpoints: {
         }[];
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "stop" | "presence_penalty" | "frequency_penalty" | "top_k" | "repetition_penalty" | "seed" | "functions" | "min_p" | "logit_bias" | "logprobs" | "top_logprobs")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "frequency_penalty" | "functions" | "logit_bias" | "logprobs" | "presence_penalty" | "seed" | "stop" | "top_logprobs" | "top_k" | "repetition_penalty" | "min_p")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};

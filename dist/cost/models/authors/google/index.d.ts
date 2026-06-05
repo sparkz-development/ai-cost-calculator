@@ -37,7 +37,7 @@ export declare const googleModels: {
         maxOutputTokens: number;
         created: string;
         modality: {
-            inputs: ("text" | "image" | "audio" | "video")[];
+            inputs: ("text" | "audio" | "image" | "video")[];
             outputs: "text"[];
         };
         tokenizer: "Gemini";
@@ -63,7 +63,7 @@ export declare const googleModels: {
         maxOutputTokens: number;
         created: string;
         modality: {
-            inputs: ("text" | "image" | "audio" | "video")[];
+            inputs: ("text" | "audio" | "image" | "video")[];
             outputs: "text"[];
         };
         tokenizer: "Gemini";
@@ -76,7 +76,7 @@ export declare const googleModels: {
         maxOutputTokens: number;
         created: string;
         modality: {
-            inputs: ("text" | "image" | "audio" | "video")[];
+            inputs: ("text" | "audio" | "image" | "video")[];
             outputs: "text"[];
         };
         tokenizer: "Gemini";
@@ -89,7 +89,7 @@ export declare const googleModels: {
         maxOutputTokens: number;
         created: string;
         modality: {
-            inputs: ("text" | "image" | "audio" | "video")[];
+            inputs: ("text" | "audio" | "image" | "video")[];
             outputs: "text"[];
         };
         tokenizer: "Gemini";
@@ -165,7 +165,7 @@ export declare const googleEndpointConfig: {
         quantization: "bf16";
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "stop" | "presence_penalty" | "frequency_penalty" | "response_format" | "top_k" | "repetition_penalty" | "seed" | "min_p")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "frequency_penalty" | "presence_penalty" | "response_format" | "seed" | "stop" | "top_k" | "repetition_penalty" | "min_p")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};
@@ -182,7 +182,7 @@ export declare const googleEndpointConfig: {
         }[];
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "stop" | "presence_penalty" | "frequency_penalty" | "top_k" | "repetition_penalty" | "seed")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "frequency_penalty" | "presence_penalty" | "seed" | "stop" | "top_k" | "repetition_penalty")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};
@@ -199,7 +199,7 @@ export declare const googleEndpointConfig: {
         }[];
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "stop" | "presence_penalty" | "frequency_penalty" | "top_k" | "repetition_penalty" | "seed" | "logprobs" | "top_logprobs")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "frequency_penalty" | "logprobs" | "presence_penalty" | "seed" | "stop" | "top_logprobs" | "top_k" | "repetition_penalty")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};
@@ -224,7 +224,7 @@ export declare const googleEndpointConfig: {
         }[];
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "stop" | "response_format" | "seed" | "reasoning" | "include_reasoning" | "structured_outputs")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "response_format" | "seed" | "stop" | "reasoning" | "include_reasoning" | "structured_outputs")[];
         rateLimits: {
             rpm: number;
             tpm: number;
@@ -255,7 +255,7 @@ export declare const googleEndpointConfig: {
         }[];
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "stop" | "response_format" | "seed" | "reasoning" | "include_reasoning" | "structured_outputs")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "response_format" | "seed" | "stop" | "reasoning" | "include_reasoning" | "structured_outputs")[];
         responseFormat: "GOOGLE";
         ptbEnabled: true;
         endpointConfigs: {
@@ -275,7 +275,7 @@ export declare const googleEndpointConfig: {
         }[];
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "stop" | "response_format" | "seed")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "response_format" | "seed" | "stop")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};
@@ -292,7 +292,7 @@ export declare const googleEndpointConfig: {
         }[];
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "stop" | "response_format" | "seed" | "reasoning" | "include_reasoning" | "structured_outputs")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "response_format" | "seed" | "stop" | "reasoning" | "include_reasoning" | "structured_outputs")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};
@@ -313,7 +313,7 @@ export declare const googleEndpointConfig: {
         }[];
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "stop" | "response_format" | "seed")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "response_format" | "seed" | "stop")[];
         rateLimits: {
             rpm: number;
             tpm: number;
@@ -340,7 +340,7 @@ export declare const googleEndpointConfig: {
         }[];
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "stop" | "response_format" | "seed")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "response_format" | "seed" | "stop")[];
         responseFormat: "GOOGLE";
         ptbEnabled: true;
         endpointConfigs: {
@@ -364,7 +364,7 @@ export declare const googleEndpointConfig: {
         }[];
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "stop" | "response_format" | "seed")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "response_format" | "seed" | "stop")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};
@@ -388,7 +388,7 @@ export declare const googleEndpointConfig: {
         }[];
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "stop" | "response_format" | "seed" | "reasoning" | "include_reasoning" | "structured_outputs")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "response_format" | "seed" | "stop" | "reasoning" | "include_reasoning" | "structured_outputs")[];
         rateLimits: {
             rpm: number;
             tpm: number;
@@ -418,7 +418,7 @@ export declare const googleEndpointConfig: {
         }[];
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "stop" | "response_format" | "seed" | "reasoning" | "include_reasoning" | "structured_outputs")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "response_format" | "seed" | "stop" | "reasoning" | "include_reasoning" | "structured_outputs")[];
         responseFormat: "GOOGLE";
         ptbEnabled: true;
         endpointConfigs: {
@@ -438,7 +438,7 @@ export declare const googleEndpointConfig: {
         }[];
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "stop" | "response_format" | "seed")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "response_format" | "seed" | "stop")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};
@@ -455,7 +455,7 @@ export declare const googleEndpointConfig: {
         }[];
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "stop" | "response_format" | "seed" | "reasoning" | "include_reasoning" | "structured_outputs")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "response_format" | "seed" | "stop" | "reasoning" | "include_reasoning" | "structured_outputs")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};
@@ -485,7 +485,7 @@ export declare const googleEndpointConfig: {
         })[];
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "stop" | "response_format" | "seed" | "reasoning" | "include_reasoning" | "structured_outputs")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "response_format" | "seed" | "stop" | "reasoning" | "include_reasoning" | "structured_outputs")[];
         responseFormat: "GOOGLE";
         ptbEnabled: true;
         endpointConfigs: {
@@ -505,7 +505,7 @@ export declare const googleEndpointConfig: {
         }[];
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "stop" | "response_format" | "seed")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "response_format" | "seed" | "stop")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};
@@ -522,7 +522,7 @@ export declare const googleEndpointConfig: {
         }[];
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "stop" | "response_format" | "seed" | "reasoning" | "include_reasoning" | "structured_outputs")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "response_format" | "seed" | "stop" | "reasoning" | "include_reasoning" | "structured_outputs")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};
@@ -549,7 +549,7 @@ export declare const googleEndpointConfig: {
         })[];
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "stop" | "response_format" | "seed" | "reasoning" | "include_reasoning" | "structured_outputs")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "response_format" | "seed" | "stop" | "reasoning" | "include_reasoning" | "structured_outputs")[];
         rateLimits: {
             rpm: number;
             tpm: number;
@@ -582,7 +582,7 @@ export declare const googleEndpointConfig: {
         })[];
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "stop" | "response_format" | "seed" | "reasoning" | "include_reasoning" | "structured_outputs")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "response_format" | "seed" | "stop" | "reasoning" | "include_reasoning" | "structured_outputs")[];
         responseFormat: "GOOGLE";
         ptbEnabled: true;
         endpointConfigs: {
@@ -602,7 +602,7 @@ export declare const googleEndpointConfig: {
         }[];
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "stop" | "response_format" | "seed")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "response_format" | "seed" | "stop")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};
@@ -619,7 +619,7 @@ export declare const googleEndpointConfig: {
         }[];
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "stop" | "response_format" | "seed" | "reasoning" | "include_reasoning" | "structured_outputs")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "response_format" | "seed" | "stop" | "reasoning" | "include_reasoning" | "structured_outputs")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};
@@ -645,7 +645,7 @@ export declare const googleEndpointConfig: {
         }[];
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "stop" | "response_format" | "seed" | "reasoning" | "include_reasoning" | "structured_outputs")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "response_format" | "seed" | "stop" | "reasoning" | "include_reasoning" | "structured_outputs")[];
         rateLimits: {
             rpm: number;
             tpm: number;
@@ -677,7 +677,7 @@ export declare const googleEndpointConfig: {
         }[];
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "stop" | "response_format" | "seed" | "reasoning" | "include_reasoning" | "structured_outputs")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "response_format" | "seed" | "stop" | "reasoning" | "include_reasoning" | "structured_outputs")[];
         responseFormat: "GOOGLE";
         ptbEnabled: true;
         endpointConfigs: {
@@ -697,7 +697,7 @@ export declare const googleEndpointConfig: {
         }[];
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "stop" | "response_format" | "seed")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "response_format" | "seed" | "stop")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};
@@ -723,7 +723,7 @@ export declare const googleEndpointConfig: {
         }[];
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "stop" | "response_format" | "seed" | "reasoning" | "include_reasoning" | "structured_outputs")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "response_format" | "seed" | "stop" | "reasoning" | "include_reasoning" | "structured_outputs")[];
         rateLimits: {
             rpm: number;
             tpm: number;
@@ -755,7 +755,7 @@ export declare const googleEndpointConfig: {
         }[];
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "stop" | "response_format" | "seed" | "reasoning" | "include_reasoning" | "structured_outputs")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "response_format" | "seed" | "stop" | "reasoning" | "include_reasoning" | "structured_outputs")[];
         responseFormat: "GOOGLE";
         ptbEnabled: true;
         endpointConfigs: {
@@ -775,7 +775,7 @@ export declare const googleEndpointConfig: {
         }[];
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "stop" | "response_format" | "seed")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "response_format" | "seed" | "stop")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};
@@ -792,7 +792,7 @@ export declare const googleEndpointConfig: {
         }[];
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "stop" | "response_format" | "seed" | "reasoning" | "include_reasoning" | "structured_outputs")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "response_format" | "seed" | "stop" | "reasoning" | "include_reasoning" | "structured_outputs")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};
@@ -820,7 +820,7 @@ export declare const googleEndpointConfig: {
         })[];
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "stop" | "response_format" | "seed" | "reasoning" | "include_reasoning" | "structured_outputs")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "response_format" | "seed" | "stop" | "reasoning" | "include_reasoning" | "structured_outputs")[];
         rateLimits: {
             rpm: number;
             tpm: number;
@@ -854,7 +854,7 @@ export declare const googleEndpointConfig: {
         })[];
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "stop" | "response_format" | "seed" | "reasoning" | "include_reasoning" | "structured_outputs")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "response_format" | "seed" | "stop" | "reasoning" | "include_reasoning" | "structured_outputs")[];
         responseFormat: "GOOGLE";
         ptbEnabled: true;
         endpointConfigs: {
@@ -874,7 +874,7 @@ export declare const googleEndpointConfig: {
         }[];
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "stop" | "response_format" | "seed")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "tools" | "tool_choice" | "response_format" | "seed" | "stop")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};
@@ -895,7 +895,7 @@ export declare const googleEndpointConfig: {
         }[];
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "stop" | "response_format" | "seed")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "response_format" | "seed" | "stop")[];
         rateLimits: {
             rpm: number;
             tpm: number;
@@ -922,7 +922,7 @@ export declare const googleEndpointConfig: {
         }[];
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "stop" | "response_format" | "seed")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "response_format" | "seed" | "stop")[];
         responseFormat: "GOOGLE";
         ptbEnabled: false;
         endpointConfigs: {
@@ -946,7 +946,7 @@ export declare const googleEndpointConfig: {
         }[];
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "stop" | "response_format" | "seed")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "response_format" | "seed" | "stop")[];
         ptbEnabled: false;
         endpointConfigs: {
             "*": {};

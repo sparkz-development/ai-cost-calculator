@@ -1,5 +1,5 @@
 import { GoogleUsageMetadata } from "../../../types/google";
-import { ModelUsage } from "@helicone-package/cost/usage/types";
+import { ModelUsage } from "../../../../../cost/usage/types";
 /**
  * Converts GoogleUsageMetadata to normalized ModelUsage.
  *

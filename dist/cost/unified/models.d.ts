@@ -23,7 +23,7 @@ export declare function getModelConfig(creator: Creator, modelName: string, prov
     provider: Provider;
     modelString: string;
     endpoint: string;
-    mapper: import("@helicone-package/llm-mapper/path-mapper/core").PathMapper<unknown, import("index").LLMRequestBody>;
+    mapper: import("../../llm-mapper/path-mapper/core").PathMapper<unknown, import("../../index").LLMRequestBody>;
     baseUrl: string;
     authHeaderConfig: {
         headerName: string;

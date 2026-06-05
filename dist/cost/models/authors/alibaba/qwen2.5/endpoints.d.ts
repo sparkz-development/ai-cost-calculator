@@ -10,7 +10,7 @@ export declare const endpoints: {
         }[];
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "stop" | "presence_penalty" | "frequency_penalty" | "response_format" | "top_k" | "seed" | "logit_bias" | "logprobs" | "top_logprobs" | "structured_outputs")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "frequency_penalty" | "logit_bias" | "logprobs" | "presence_penalty" | "response_format" | "seed" | "stop" | "top_logprobs" | "top_k" | "structured_outputs")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};

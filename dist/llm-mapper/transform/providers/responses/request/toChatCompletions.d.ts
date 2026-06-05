@@ -1,3 +1,3 @@
 import { ResponsesRequestBody } from "../../../types/responses";
-import { HeliconeChatCreateParams } from "@helicone-package/prompts/types";
+import { HeliconeChatCreateParams } from "../../../../../prompts/types";
 export declare function toChatCompletions(body: ResponsesRequestBody): HeliconeChatCreateParams;

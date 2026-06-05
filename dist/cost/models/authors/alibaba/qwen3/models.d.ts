@@ -33,7 +33,7 @@ export declare const models: {
         maxOutputTokens: number;
         created: string;
         modality: {
-            inputs: ("text" | "image" | "audio" | "video")[];
+            inputs: ("text" | "audio" | "image" | "video")[];
             outputs: "text"[];
         };
         tokenizer: "Qwen";

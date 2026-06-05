@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.HeliconePromptManager = void 0;
-const templates_1 = require("@helicone-package/prompts/templates");
+const templates_1 = require("./templates");
 class HeliconePromptManager {
     constructor(options) {
         this.apiKey = options.apiKey;

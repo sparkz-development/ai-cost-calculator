@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.VertexUsageProcessor = exports.VertexOpenAIUsageProcessor = void 0;
 const bedrockUsageProcessor_1 = require("./bedrockUsageProcessor");
 const openAIUsageProcessor_1 = require("./openAIUsageProcessor");
-const mapGoogleUsageToModelUsage_1 = require("@helicone-package/llm-mapper/transform/providers/google/utils/mapGoogleUsageToModelUsage");
+const mapGoogleUsageToModelUsage_1 = require("../../llm-mapper/transform/providers/google/utils/mapGoogleUsageToModelUsage");
 class VertexOpenAIUsageProcessor extends openAIUsageProcessor_1.OpenAIUsageProcessor {
     extractUsageFromResponse(response) {
         const usage = response.usageMetadata;

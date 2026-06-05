@@ -7,7 +7,7 @@ export declare const model: {
         maxOutputTokens: number;
         created: string;
         modality: {
-            inputs: ("text" | "image" | "audio" | "video")[];
+            inputs: ("text" | "audio" | "image" | "video")[];
             outputs: "text"[];
         };
         tokenizer: "Gemini";

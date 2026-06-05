@@ -58,7 +58,7 @@ interface GoogleChatRequest {
 /**
  * Build the Google Chat mapper with proper type safety
  */
-export declare const googleChatMapper: import("index").PathMapper<GoogleChatRequest, import("../../types").LLMRequestBody>;
+export declare const googleChatMapper: import("../../../index").PathMapper<GoogleChatRequest, import("../../types").LLMRequestBody>;
 /**
  * Maps a Google/Gemini request to our internal format
  */

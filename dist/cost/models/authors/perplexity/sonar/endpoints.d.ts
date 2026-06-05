@@ -12,7 +12,7 @@ export declare const endpoints: {
         }[];
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "stop" | "frequency_penalty" | "response_format")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "frequency_penalty" | "response_format" | "stop")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};
@@ -31,7 +31,7 @@ export declare const endpoints: {
         }[];
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "stop" | "frequency_penalty" | "response_format")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "frequency_penalty" | "response_format" | "stop")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};
@@ -50,7 +50,7 @@ export declare const endpoints: {
         }[];
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "stop" | "frequency_penalty" | "response_format" | "reasoning")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "frequency_penalty" | "response_format" | "stop" | "reasoning")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};
@@ -69,7 +69,7 @@ export declare const endpoints: {
         }[];
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "stop" | "frequency_penalty" | "response_format" | "reasoning")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "frequency_penalty" | "response_format" | "stop" | "reasoning")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};
@@ -88,7 +88,7 @@ export declare const endpoints: {
         }[];
         contextLength: number;
         maxCompletionTokens: number;
-        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "stop" | "frequency_penalty" | "response_format" | "reasoning")[];
+        supportedParameters: ("temperature" | "top_p" | "max_tokens" | "frequency_penalty" | "response_format" | "stop" | "reasoning")[];
         ptbEnabled: true;
         endpointConfigs: {
             "*": {};

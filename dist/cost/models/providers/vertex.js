@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.VertexProvider = void 0;
 const base_1 = require("./base");
 const gcpServiceAccountAuth_1 = require("../../auth/gcpServiceAccountAuth");
-const toGoogle_1 = require("@helicone-package/llm-mapper/transform/providers/openai/request/toGoogle");
+const toGoogle_1 = require("../../../llm-mapper/transform/providers/openai/request/toGoogle");
 class VertexProvider extends base_1.BaseProvider {
     constructor() {
         super(...arguments);

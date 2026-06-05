@@ -1,5 +1,5 @@
-import { ModelProviderName } from "@helicone-package/cost/models/providers";
-import { ResponseFormat, BodyMappingType } from "@helicone-package/cost/models/types";
+import { ModelProviderName } from "../../../cost/models/providers";
+import { ResponseFormat, BodyMappingType } from "../../../cost/models/types";
 import { ChatCompletionChunk } from "../types/openai";
 export declare function toOpenAIResponse(response: Response, provider: ModelProviderName, providerModelId: string, isStream?: boolean): Promise<Response>;
 export declare function toOpenAIStreamResponse(response: Response, provider: ModelProviderName, providerModelId: string): Response;

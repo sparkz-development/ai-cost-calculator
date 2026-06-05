@@ -4,7 +4,7 @@ exports.toOpenAI = toOpenAI;
 exports.mapGoogleUsage = mapGoogleUsage;
 exports.mapGoogleFinishReason = mapGoogleFinishReason;
 const mapGoogleUsageToModelUsage_1 = require("../utils/mapGoogleUsageToModelUsage");
-const mapModelUsageToOpenAI_1 = require("@helicone-package/cost/usage/mapModelUsageToOpenAI");
+const mapModelUsageToOpenAI_1 = require("../../../../../cost/usage/mapModelUsageToOpenAI");
 // Google Response Body -> OpenAI Response Body
 function toOpenAI(response) {
     var _a, _b, _c, _d;

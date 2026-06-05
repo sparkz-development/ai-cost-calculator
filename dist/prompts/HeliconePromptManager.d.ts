@@ -1,5 +1,5 @@
 import { HeliconeChatCreateParams, HeliconeChatCreateParamsStreaming, HeliconePromptParams } from "./types";
-import { Prompt2025Version, ValidationError, PromptPartialVariable } from "@helicone-package/prompts/types";
+import { Prompt2025Version, ValidationError, PromptPartialVariable } from "./types";
 import { ChatCompletionCreateParams } from "openai/resources/chat/completions";
 interface HeliconePromptManagerOptions {
     apiKey: string;
